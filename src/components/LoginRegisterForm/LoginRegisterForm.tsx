@@ -7,40 +7,45 @@ type LoginRegisterFormProps = {
 
 function LoginRegisterForm({ action }: LoginRegisterFormProps) {
   return (
-    <form className={`${action === 'login' ? 'login' : 'register'}__form`}>
-      <div
-        className={`${
-          action === 'login' ? 'login' : 'register'
-        }__input-container`}
-      >
+    <form className="login-register__form">
+      <div className="login-register__input-container">
         <input
           type="text"
           name="id"
-          className={`${action === 'login' ? 'login' : 'register'}__input`}
+          className="login-register__input"
           placeholder="ID"
         />
         {action === 'register' ? (
           <input
             type="text"
             name="name"
-            className="register__input"
+            className="login-register__input"
             placeholder="Name"
           />
         ) : null}
         <input
           type="text"
           name="id"
-          className={`${action === 'login' ? 'login' : 'register'}__input`}
+          className="login-register__input"
           placeholder="Password"
         />
         {action === 'register' ? (
           <input
             type="text"
             name="name"
-            className="register__input"
+            className="login-register__input"
             placeholder="Confirm password"
           />
         ) : null}
+      </div>
+      <p className="login-register__error"></p>
+      <div className="login-register__btn-container">
+        <button type="button" className="login-register__btn-cancel">
+          Cancel
+        </button>
+        <button type="submit" className="login-register__btn-submit">
+          {action === 'register' ? 'Register' : 'Login'}
+        </button>
       </div>
     </form>
   );

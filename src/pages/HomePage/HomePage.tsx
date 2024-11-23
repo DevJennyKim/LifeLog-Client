@@ -21,7 +21,7 @@ function HomePage() {
           </Link>
         </div>
       </header>
-      <main className="main">
+      <main className="home-main">
         <section className="hero">
           <div className="hero__img-container">
             <img
