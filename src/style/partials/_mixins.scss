@@ -1,0 +1,65 @@
+@use './variables' as *;
+
+@mixin tablet {
+  @media screen and (min-width: 768px) and (max-width: 1279px) {
+    @content;
+  }
+}
+@mixin mobile {
+  @media screen and (max-width: $mobile_breakpoint) {
+    @content;
+  }
+}
+
+@mixin title_font {
+  font-family: 'Playfair Display', serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@keyframes grow {
+  from {
+    flex: 0.5;
+  }
+  to {
+    flex: 1.8;
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes width {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+// @keyframes blink {
+//   50% {
+//     border-color: transparent;
+//   }
+// }
