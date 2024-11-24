@@ -6,7 +6,6 @@ import Logo from '../../assets/logo/font-white.svg';
 function LoginRegister() {
   const location = useLocation();
   const navigate = useNavigate();
-
   const isLogin = location.pathname === '/login';
 
   return (

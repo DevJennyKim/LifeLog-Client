@@ -15,7 +15,7 @@ function HomePage() {
           </Link>
         </div>
         <div className="home-header__login">
-          <Link to="/" className="home-header__login-link">
+          <Link to="/login" className="home-header__login-link">
             Login
           </Link>
         </div>
