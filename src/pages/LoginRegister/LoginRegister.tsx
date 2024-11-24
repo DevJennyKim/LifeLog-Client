@@ -17,7 +17,9 @@ function LoginRegister() {
         }`}
       >
         <div className="login-register__logo-container">
-          <img src={Logo} alt="logo" />
+          <Link to="/">
+            <img src={Logo} alt="logo" />
+          </Link>
         </div>
         <div className="login-register__form-container">
           <h1 className="login-register__form-title">
@@ -29,16 +31,22 @@ function LoginRegister() {
             onSwitch={() => navigate(isLogin ? '/register' : '/login')}
           />
 
-          {isLogin ? (
-            <>
-              <p>Do you already have an account?</p>{' '}
-              <Link to="/login">Login here</Link>
-            </>
+          {!isLogin ? (
+            <div className="login-register__question-container">
+              <p className="login-register__question">
+                Do you already have an account?
+              </p>{' '}
+              <Link to="/login" className="login-register__link">
+                Login here
+              </Link>
+            </div>
           ) : (
-            <>
-              <p>Don't have an account?</p>
-              <Link to="/register">Register here</Link>
-            </>
+            <div className="login-register__question-container">
+              <p className="login-register__question">Don't have an account?</p>
+              <Link to="/register" className="login-register__link">
+                Register here
+              </Link>
+            </div>
           )}
         </div>
       </section>

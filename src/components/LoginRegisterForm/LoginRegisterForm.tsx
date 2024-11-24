@@ -1,4 +1,4 @@
-import './LoginRegisterForm.scss';
+import { useNavigate } from 'react-router-dom';
 
 type LoginRegisterFormProps = {
   action: 'login' | 'register';
@@ -6,6 +6,7 @@ type LoginRegisterFormProps = {
 };
 
 function LoginRegisterForm({ action }: LoginRegisterFormProps) {
+  const navigate = useNavigate();
   return (
     <form className="login-register__form">
       <div className="login-register__input-container">
@@ -40,10 +41,19 @@ function LoginRegisterForm({ action }: LoginRegisterFormProps) {
       </div>
       <p className="login-register__error"></p>
       <div className="login-register__btn-container">
-        <button type="button" className="login-register__btn-cancel">
+        <button
+          type="button"
+          className="login-register__btn login-register__btn-cancel"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
           Cancel
         </button>
-        <button type="submit" className="login-register__btn-submit">
+        <button
+          type="submit"
+          className="login-register__btn login-register__btn-submit"
+        >
           {action === 'register' ? 'Register' : 'Login'}
         </button>
       </div>

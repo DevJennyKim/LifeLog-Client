@@ -3,8 +3,7 @@
 @use '../../style/partials/variables' as *;
 
 .home-header {
-  display: flex;
-  flex-direction: column;
+  @include column;
   height: 9rem;
   @include tablet {
     flex-direction: row;
@@ -120,8 +119,7 @@
 
   &__welcome {
     cursor: default;
-    display: flex;
-    flex-direction: column;
+    @include column;
     margin: 0 1vw;
   }
 
@@ -242,8 +240,7 @@
   }
 
   &__links {
-    display: flex;
-    flex-direction: column;
+    @include column;
     align-items: flex-end;
   }
 

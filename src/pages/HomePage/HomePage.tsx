@@ -4,7 +4,6 @@ import MainImg2 from '../../assets/images/2.png';
 import MainImg3 from '../../assets/images/3.png';
 import './HomePage.scss';
 import { Link } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
 
 function HomePage() {
   return (
