@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Lifelog** is a platform where users can record and share their daily lives. Users can post photos, texts, or videos about their activities and interact with others.
+**Lifelog** is a platform where users can record and share their daily lives. Users can post photos, texts about their activities and interact with others.
 
 ### Problem Statement
 
