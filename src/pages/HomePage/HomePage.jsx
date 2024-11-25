@@ -4,7 +4,6 @@ import MainImg2 from '../../assets/images/2.png';
 import MainImg3 from '../../assets/images/3.png';
 import './HomePage.scss';
 import { Link } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
 
 function HomePage() {
   return (
@@ -16,12 +15,12 @@ function HomePage() {
           </Link>
         </div>
         <div className="home-header__login">
-          <Link to="/" className="home-header__login-link">
+          <Link to="/login" className="home-header__login-link">
             Login
           </Link>
         </div>
       </header>
-      <main className="main">
+      <main className="home-main">
         <section className="hero">
           <div className="hero__img-container">
             <img
