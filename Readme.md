@@ -30,7 +30,7 @@
 
 ### Tech Stack
 
-- **Frontend**: React (TypeScript, Sass, React Router, Axios)
+- **Frontend**: React (Sass, React Router, Axios)
 - **Backend**: Express (Knex, bcrypt, JWT)
 - **Database**: MySQL
 
