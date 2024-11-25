@@ -1,13 +1,9 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext, AuthContextProvider } from '../../context/AuthContext.js';
 
-type LoginRegisterFormProps = {
-  action: 'login' | 'register';
-  onSwitch: () => void;
-};
-
-function LoginRegisterForm({ action }: LoginRegisterFormProps) {
+function LoginRegisterForm({ action }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
@@ -18,14 +14,14 @@ function LoginRegisterForm({ action }: LoginRegisterFormProps) {
   const [error, setError] = useState('');
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (
@@ -45,11 +41,9 @@ function LoginRegisterForm({ action }: LoginRegisterFormProps) {
               email: formData.email,
               password: formData.password,
             };
-
-      const response = await axios.post(`${baseUrl}${url}`, payload);
-
-      console.log(response.data.token);
-
+      const response = await axios.post(`${baseUrl}${url}`, payload, {
+        withCredentials: true,
+      });
       if (action === 'login') {
         document.cookie = `access_token=${response.data.token}; path=/; max-age=7200;`;
         navigate('/');
@@ -66,7 +60,7 @@ function LoginRegisterForm({ action }: LoginRegisterFormProps) {
       <div className="login-register__input-container">
         <input
           type="text"
-          name="id"
+          name="email"
           className="login-register__input"
           placeholder="ID"
           onChange={handleChange}
@@ -82,7 +76,7 @@ function LoginRegisterForm({ action }: LoginRegisterFormProps) {
         ) : null}
         <input
           type="password"
-          name="id"
+          name="password"
           className="login-register__input"
           placeholder="Password"
           onChange={handleChange}
@@ -90,7 +84,7 @@ function LoginRegisterForm({ action }: LoginRegisterFormProps) {
         {action === 'register' ? (
           <input
             type="password"
-            name="name"
+            name="password"
             className="login-register__input"
             placeholder="Confirm password"
             onChange={handleChange}
