@@ -24,12 +24,12 @@ function App() {
 }
 
 function ProtectedRoute() {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <MainPage /> : <HomePage />;
+  const { currentUser } = useAuth();
+  return currentUser ? <MainPage /> : <HomePage />;
 }
 function ProtectedRouteHeader() {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <Header /> : '';
+  const { currentUser } = useAuth();
+  return currentUser ? <Header /> : '';
 }
 
 export default App;
