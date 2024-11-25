@@ -1,13 +1,10 @@
-import axios from 'axios';
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import {
-//   AuthContext,
-//   AuthContextProvider,
-// } from '../../context/AuthContext.jsx';
+import { AuthContext } from '../../context/AuthContext';
 
 function LoginRegisterForm({ action }) {
   const navigate = useNavigate();
+  const { login, logout, currentUser } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -15,7 +12,6 @@ function LoginRegisterForm({ action }) {
     confirmPassword: '',
   });
   const [error, setError] = useState('');
-  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,7 +22,6 @@ function LoginRegisterForm({ action }) {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (
       action === 'register' &&
       formData.password !== formData.confirmPassword
@@ -35,7 +30,6 @@ function LoginRegisterForm({ action }) {
       return;
     }
     try {
-      const url = action === 'login' ? '/api/auth/login' : '/api/auth/register';
       const payload =
         action === 'login'
           ? { email: formData.email, password: formData.password }
@@ -44,11 +38,8 @@ function LoginRegisterForm({ action }) {
               email: formData.email,
               password: formData.password,
             };
-      const response = await axios.post(`${baseUrl}${url}`, payload, {
-        withCredentials: true,
-      });
       if (action === 'login') {
-        document.cookie = `access_token=${response.data.token}; path=/; max-age=7200;`;
+        login(payload);
         navigate('/');
       } else {
         navigate('/login');
@@ -94,7 +85,7 @@ function LoginRegisterForm({ action }) {
           />
         ) : null}
       </div>
-      <p className="login-register__error">enter corrent password</p>
+      {error && <p className="login-register__error">{error}</p>}
       <div className="login-register__btn-container">
         <button
           type="button"
