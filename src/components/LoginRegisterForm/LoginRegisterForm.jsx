@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext, AuthContextProvider } from '../../context/AuthContext.js';
+// import {
+//   AuthContext,
+//   AuthContextProvider,
+// } from '../../context/AuthContext.jsx';
 
 function LoginRegisterForm({ action }) {
   const navigate = useNavigate();
