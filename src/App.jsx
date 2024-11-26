@@ -14,6 +14,7 @@ function App() {
           <ProtectedRouteHeader />
           <Routes>
             <Route path="/" element={<ProtectedRoute />} />
+            <Route path="/" element={<ProtectedRoute />} />
             <Route path="/login" element={<LoginRegister />} />
             <Route path="/register" element={<LoginRegister />} />
           </Routes>

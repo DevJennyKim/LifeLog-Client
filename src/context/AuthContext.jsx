@@ -26,18 +26,25 @@ const AuthContextProvider = ({ children }) => {
     const response = await axios.post(`${baseUrl}${url}`, inputs, {
       withCredentials: true,
     });
-
     const user = response.data.user;
-    console.log(response.data);
     setCurrentUser(user);
     localStorage.setItem('user', JSON.stringify(user));
     document.cookie = `access_token=${response.data.token}; path=/; max-age=7200;`;
   };
   const logout = async () => {
-    setCurrentUser(null);
-    localStorage.removeItem('user');
-    document.cookie = 'access_token=; path=/; max-age=0;';
-    setIsAuthenticated(false);
+    try {
+      await axios.post(
+        `${baseUrl}/api/auth/logout`,
+        {},
+        { withCredentials: true }
+      );
+      setCurrentUser(null);
+      localStorage.removeItem('user');
+      document.cookie = 'access_token=; path=/; max-age=0;';
+      setIsAuthenticated(false);
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
   };
   useEffect(() => {
     if (currentUser) {
@@ -49,7 +56,7 @@ const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const token = getCookie('access_token');
-    setIsAuthenticated(!!token);
+    setIsAuthenticated(!!token && !!currentUser);
   }, [currentUser]);
 
   return (
