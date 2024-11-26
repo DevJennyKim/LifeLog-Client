@@ -54,7 +54,7 @@ function Header() {
             {categories &&
               categories.map((item) => (
                 <Link
-                  to={`/${item.category_name}`}
+                  to={`/posts/category/${item.id}`}
                   key={item.id}
                   className="nav__dropdown-item"
                 >

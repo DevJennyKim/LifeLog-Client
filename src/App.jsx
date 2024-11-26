@@ -17,6 +17,8 @@ function App() {
             <Route path="/" element={<ProtectedRoute />} />
             <Route path="/login" element={<LoginRegister />} />
             <Route path="/register" element={<LoginRegister />} />
+            <Route path="/posts" element={<PostPage />} />
+            <Route path="/posts/category/:categoryId" element={<PostPage />} />
           </Routes>
         </AuthContextProvider>
       </BrowserRouter>
