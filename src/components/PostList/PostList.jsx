@@ -3,7 +3,7 @@ import { format } from 'timeago.js';
 
 function PostList({ post }) {
   return (
-    <Link to="/post-detail/:id" className="posts__item-link">
+    <Link to={`/posts/${post.id}`} className="posts__item-link">
       <div className="posts__item">
         <img
           src={post && post.img}

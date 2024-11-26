@@ -4,6 +4,7 @@ import LoginRegister from './pages/LoginRegister/LoginRegister';
 import Header from './components/Header/Header';
 import HomePage from './pages/HomePage/HomePage';
 import PostPage from './pages/PostPage/PostPage';
+import PostDetailPage from './pages/PostDetailPage/PostDetailPage';
 import { AuthContextProvider, useAuth } from './context/AuthContext';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Route path="/register" element={<LoginRegister />} />
             <Route path="/posts" element={<PostPage />} />
             <Route path="/posts/category/:categoryId" element={<PostPage />} />
+            <Route path="/posts/:postId" element={<PostDetailPage />} />
           </Routes>
         </AuthContextProvider>
       </BrowserRouter>
