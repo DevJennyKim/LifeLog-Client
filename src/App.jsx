@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Router } from 'react-router-dom';
 import LoginRegister from './pages/LoginRegister/LoginRegister';
 import Header from './components/Header/Header';
 import HomePage from './pages/HomePage/HomePage';
-import MainPage from './pages/MainPage/MainPage';
+import PostPage from './pages/PostPage/PostPage';
 import { AuthContextProvider, useAuth } from './context/AuthContext';
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
         <AuthContextProvider>
           <ProtectedRouteHeader />
           <Routes>
+            <Route path="/" element={<ProtectedRoute />} />
             <Route path="/" element={<ProtectedRoute />} />
             <Route path="/login" element={<LoginRegister />} />
             <Route path="/register" element={<LoginRegister />} />
@@ -24,12 +25,12 @@ function App() {
 }
 
 function ProtectedRoute() {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <MainPage /> : <HomePage />;
+  const { currentUser } = useAuth();
+  return currentUser ? <PostPage /> : <HomePage />;
 }
 function ProtectedRouteHeader() {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <Header /> : '';
+  const { currentUser } = useAuth();
+  return currentUser ? <Header /> : '';
 }
 
 export default App;

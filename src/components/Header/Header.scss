@@ -1,0 +1,224 @@
+@use '../../style/partials/global' as *;
+@use '../../style/partials/mixins' as *;
+@use '../../style/partials/variables' as *;
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  position: relative;
+  &__logo {
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    &-img {
+      height: 5rem;
+    }
+  }
+
+  &__toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 3rem;
+    height: 3rem;
+    margin: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+
+    span {
+      display: block;
+      width: 100%;
+      height: 0.4rem;
+      background-color: $dark-brown;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    &--active span:nth-child(1) {
+      transform: translateY(0.8rem) rotate(45deg);
+    }
+    &--active span:nth-child(2) {
+      opacity: 0;
+    }
+    &--active span:nth-child(3) {
+      transform: translateY(-0.8rem) rotate(-45deg);
+    }
+  }
+
+  &__menu {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    font-size: 2rem;
+    padding: 2rem;
+    gap: 1rem;
+    background-color: $bg-color;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+
+    &--open {
+      display: flex;
+      left: 0;
+    }
+
+    &__links {
+      text-decoration: none;
+      color: #555;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin: 1rem 0;
+
+      &:hover {
+        color: #333;
+      }
+    }
+  }
+
+  &__dropdown {
+    display: none;
+    position: relative;
+    flex-direction: column;
+    margin-top: 1rem;
+
+    .nav__category:hover & {
+      display: flex;
+    }
+
+    &-item {
+      padding: 1rem;
+      text-decoration: none;
+      color: #555;
+
+      &:hover {
+        background-color: $white-gray;
+        color: #333;
+      }
+    }
+  }
+
+  &__users {
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 2rem;
+  }
+  &__link-username {
+    font-size: 1.5rem;
+    color: #555;
+    font-weight: 600;
+    padding: 0 3rem;
+    &:hover {
+      color: #333;
+    }
+  }
+  &__logout {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #555;
+    padding-right: 1.5rem;
+    &:hover {
+      color: #333;
+    }
+  }
+  &__writing {
+    font-size: 1.7rem;
+    background-color: $nav-font-color;
+    @include btn-style;
+  }
+
+  @include tablet {
+    & {
+      flex-wrap: nowrap;
+      height: 8rem;
+    }
+
+    // &__toggle {
+    //   display: none;
+    // }
+
+    // &__menu {
+    //   display: flex;
+    //   flex-direction: row;
+    //   align-items: center;
+    //   gap: 5rem;
+    //   position: static;
+    //   width: auto;
+    //   box-shadow: none;
+    //   padding: 0;
+    // }
+
+    &__dropdown {
+      display: none;
+      position: static;
+      top: auto;
+      left: auto;
+      background-color: $bg-color;
+      width: 100%;
+    }
+
+    .nav__menu--open & {
+      display: flex;
+    }
+  }
+
+  @include desktop {
+    &__toggle {
+      display: none;
+    }
+
+    &__menu {
+      position: static;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: auto;
+      box-shadow: none;
+      padding: 2.5rem 2.5rem 2.5rem 7rem;
+      gap: 7rem;
+    }
+    &__category {
+      position: relative;
+      cursor: pointer;
+      &:hover .nav__dropdown {
+        display: flex;
+      }
+    }
+    &__dropdown {
+      display: none;
+      position: absolute;
+      top: 65%;
+      left: -3.5rem;
+      background-color: $bg-color;
+      flex-direction: column;
+      z-index: 1000;
+      width: 150px;
+      &-item {
+        padding: 1rem 2rem;
+        text-decoration: none;
+        color: #555;
+        &:hover {
+          background-color: $dark-brown;
+          color: #333;
+        }
+      }
+
+      .nav__category:hover & {
+        display: flex;
+      }
+    }
+    &__users {
+      margin-top: 0;
+    }
+  }
+}
