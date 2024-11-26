@@ -2,7 +2,7 @@ import './PostPage.scss';
 import PostList from '../../components/PostList/PostList';
 import { useEffect, useState } from 'react';
 import { getPosts, getPostsByCategory } from '../../api/api';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function PostPage() {
   const { categoryId } = useParams();
