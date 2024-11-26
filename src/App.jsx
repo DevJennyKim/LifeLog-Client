@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Router } from 'react-router-dom';
 import LoginRegister from './pages/LoginRegister/LoginRegister';
 import Header from './components/Header/Header';
 import HomePage from './pages/HomePage/HomePage';
-import MainPage from './pages/MainPage/MainPage';
+import PostPage from './pages/PostPage/PostPage';
 import { AuthContextProvider, useAuth } from './context/AuthContext';
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
 
 function ProtectedRoute() {
   const { currentUser } = useAuth();
-  return currentUser ? <MainPage /> : <HomePage />;
+  return currentUser ? <PostPage /> : <HomePage />;
 }
 function ProtectedRouteHeader() {
   const { currentUser } = useAuth();
