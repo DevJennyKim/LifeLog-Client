@@ -20,4 +20,14 @@ const getPosts = async () => {
     console.error('Error getting Posts: ', error);
   }
 };
-export { getCategory, getPosts };
+const getPostsByCategory = async (categoryId) => {
+  try {
+    const url = '/api/posts/category/';
+    const { data } = await axios.get(`${baseUrl}${url}${categoryId}`);
+    return data;
+  } catch (error) {
+    console.error('Error fetching posts by category:', error);
+    throw error;
+  }
+};
+export { getCategory, getPosts, getPostsByCategory };
