@@ -4,8 +4,11 @@ const formatCreatedAt = (createdAt) => {
   if (!createdAt || isNaN(new Date(createdAt))) {
     return '';
   }
+
   const postDate = new Date(createdAt);
   const now = new Date();
+
+  postDate.setMinutes(postDate.getMinutes() - postDate.getTimezoneOffset());
 
   const timeDifference = now - postDate;
 

@@ -3,16 +3,13 @@ import { SlOptions } from 'react-icons/sl';
 import formatCreatedAt from '../../utils/dateUtils';
 
 function PostDetail({ singlePost }) {
-  console.log(singlePost);
-
   return (
     <div className="single-post" key={singlePost.id}>
       <div className="single-post__container">
         <div className="single-post__title-wrapper">
           <h2 className="single-post__title">{singlePost.title}</h2>
-
           <div className="single-post__date">
-            {singlePost && formatCreatedAt(singlePost.created_at)}
+            {formatCreatedAt(singlePost.created_at)}
           </div>
         </div>
         <div className="single-post__post">
@@ -27,7 +24,7 @@ function PostDetail({ singlePost }) {
               <SlOptions className="single-post__options" />
             </div>
             <div className="single-post__likes">
-              <p className="single-post__num-like">12</p>
+              <p className="single-post__num-like">{singlePost.likes}</p>
               <IoHeart className="single-post__like-icon" />
             </div>
           </div>

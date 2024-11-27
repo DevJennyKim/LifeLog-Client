@@ -1,7 +1,8 @@
 import './Comments.scss';
 import { SlOptions } from 'react-icons/sl';
+import formatCreatedAt from '../../utils/dateUtils';
 
-function Comments() {
+function Comments({ comments }) {
   return (
     <div className="comments">
       <form action="" className="comments__form">
@@ -16,34 +17,31 @@ function Comments() {
         </button>
       </form>
       <div className="comments__list">
-        <h3 className="comments__title">3 Comments</h3>
-        <div className="comments__item">
-          <div className="comments__author">
-            <div className="comments__username-and-feature">
-              <p className="comments__username">username</p>
-              <SlOptions className="comments__options" />
+        <h3 className="comments__title">
+          {' '}
+          {comments && typeof comments !== 'string'
+            ? `${comments.length} Comments`
+            : '0 Comments'}
+        </h3>
+
+        {typeof comments === 'string' ? (
+          <div className="comments__no-comment">{comments}</div>
+        ) : (
+          comments.map((comment) => (
+            <div className="comments__item" key={comment.id}>
+              <div className="comments__author">
+                <div className="comments__username-and-feature">
+                  <p className="comments__username">{comment.username}</p>
+                  <SlOptions className="comments__options" />
+                </div>
+                <p className="comments__created-at">
+                  {formatCreatedAt(comment.created_at)}
+                </p>
+              </div>
+              <p className="comments__comment">{comment.comment}</p>
             </div>
-            <p className="comments__created-at">2024.11.18</p>
-          </div>
-          <p className="comments__comment">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi quis
-            debitis accusantium.
-          </p>
-        </div>
-        {/*  */}
-        <div className="comments__item">
-          <div className="comments__author">
-            <div className="comments__username-and-feature">
-              <p className="comments__username">username</p>
-              <SlOptions className="comments__options" />
-            </div>
-            <p className="comments__created-at">2024.11.18</p>
-          </div>
-          <p className="comments__comment">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi quis
-            debitis accusantium.
-          </p>
-        </div>
+          ))
+        )}
       </div>
     </div>
   );

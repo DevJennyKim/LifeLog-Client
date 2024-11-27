@@ -49,6 +49,11 @@
       font-size: 2rem;
     }
   }
+  &__no-comment {
+    display: flex;
+    justify-content: center;
+    padding: 5rem;
+  }
   &__item {
     @include column;
     gap: 1rem;
