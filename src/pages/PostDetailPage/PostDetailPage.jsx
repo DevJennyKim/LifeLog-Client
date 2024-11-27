@@ -13,6 +13,7 @@ import {
 
 function PostDetailPage() {
   const { postId } = useParams();
+  const { currentUser } = useAuth();
   const [posts, setPosts] = useState([]);
   const [singlePost, setSinglePost] = useState({});
   const [comments, setComments] = useState([]);

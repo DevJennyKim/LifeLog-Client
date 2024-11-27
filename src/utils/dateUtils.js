@@ -12,7 +12,7 @@ const formatCreatedAt = (createdAt) => {
 
   const timeDifference = now - postDate;
 
-  if (timeDifference < 86400000) {
+  if (timeDifference < 2592000000) {
     return timeAgoFormat(createdAt);
   } else {
     return postDate.toISOString().split('T')[0];

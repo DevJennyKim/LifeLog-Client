@@ -2,6 +2,10 @@ import { Link } from 'react-router-dom';
 import formatCreatedAt from '../../utils/dateUtils';
 
 function PostListInDetail({ posts }) {
+  const scrollTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="post-list-in-detail">
       <div className="post-list-in-detail__container">
@@ -10,7 +14,7 @@ function PostListInDetail({ posts }) {
         </div>
         <div className="post-list-in-detail__list">
           {posts.map((post) => (
-            <Link to={`/posts/${post.id}`} key={post.id}>
+            <Link to={`/posts/${post.id}`} key={post.id} onClick={scrollTop}>
               <div className="post-list-in-detail__item">
                 <img
                   src={post.img}

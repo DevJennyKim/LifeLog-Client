@@ -76,11 +76,35 @@
     align-items: center;
     gap: 1rem;
   }
+  &__options-container {
+    position: relative;
+  }
   &__options {
     font-size: 1.7rem;
     color: rgb(112, 112, 112);
+    cursor: pointer;
   }
-
+  &__options-menu {
+    @include column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 0.5rem;
+    background-color: white;
+    border: 1px solid lightgray;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  &__options-btn {
+    background: none;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    text-align: left;
+    cursor: pointer;
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
   &__created-at {
     font-family: 'open-sans';
     font-size: 1.2rem;

@@ -1,6 +1,6 @@
 import './Header.scss';
 import logo from '../../assets/logo/brown.svg';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { getCategory } from '../../api/api';
@@ -10,6 +10,7 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
+  const location = useLocation();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -28,6 +29,7 @@ function Header() {
   }, []);
   const handleLogout = async () => {
     logout();
+    location('/');
   };
   return (
     <nav className="nav">
