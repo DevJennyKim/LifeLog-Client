@@ -4,6 +4,7 @@ import PostDetail from '../../components/PostDetail/PostDetail';
 import Comments from '../../components/Comments/Comments';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
 import {
   getPosts,
   getSinglePostsById,
@@ -64,8 +65,8 @@ function PostDetailPage() {
         <PostListInDetail posts={filteredPosts} />
       </section>
       <section className="post-detail-page__content">
-        <PostDetail singlePost={singlePost} />
-        <Comments comments={comments} />
+        <PostDetail singlePost={singlePost} currentUser={currentUser} />
+        <Comments comments={comments} currentUser={currentUser} />
       </section>
     </main>
   );
