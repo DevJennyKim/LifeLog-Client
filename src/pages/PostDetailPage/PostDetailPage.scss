@@ -65,8 +65,9 @@
   &__item {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid lightgray !important;
     padding: 1.5rem 3rem;
+    color: black;
     @include desktop {
       flex-direction: column;
       margin: 1.5rem 3rem;
@@ -87,17 +88,28 @@
     }
     &-content {
       align-items: center;
+      gap: 0.5rem;
       @include desktop;
       display: flex;
       justify-content: space-between;
       width: 100%;
     }
     &-title {
+      flex: 1.8;
       font-size: 1.7rem;
       font-weight: 400;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      max-width: 100%;
     }
     &-author {
+      flex: 1;
+      text-align: end;
       @include column;
+      @include desktop {
+        flex: 0.7;
+      }
     }
   }
   &__username {
