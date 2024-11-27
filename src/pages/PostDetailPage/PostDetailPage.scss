@@ -71,6 +71,7 @@
       flex-direction: column;
       margin: 1.5rem 3rem;
       padding: 0.5rem 1rem;
+      gap: 1.5rem;
     }
     &:last-child {
       border-bottom: none;
@@ -100,10 +101,11 @@
     }
   }
   &__username {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
   &__created-at {
-    font-size: 1.3rem;
+    font-family: 'open-sans';
+    font-size: 1.2rem;
   }
 }
 
@@ -131,6 +133,7 @@
     font-size: 2rem;
   }
   &__date {
+    font-family: 'open-sans';
     font-size: 1.6rem;
   }
   &__post {
@@ -162,13 +165,28 @@
     font-weight: 600;
     font-size: 1.7rem;
   }
+  &__username-and-feature {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  &__options {
+    color: rgb(112, 112, 112);
+    font-size: 1.7rem;
+  }
   &__num-like {
+    font-family: 'open-sans';
     font-size: 1.5rem;
   }
   &__like-icon {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
   &__desc {
     font-size: 1.6rem;
+    line-height: 1.7;
+    @include desktop {
+      font-size: 1.8rem;
+      line-height: 2.5;
+    }
   }
 }

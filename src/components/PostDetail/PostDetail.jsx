@@ -1,5 +1,7 @@
 import EgImg from '../../assets/images/5.png';
 import { IoHeart } from 'react-icons/io5';
+import { SlOptions } from 'react-icons/sl';
+
 function PostDetail() {
   return (
     <div className="single-post">
@@ -12,7 +14,10 @@ function PostDetail() {
         <div className="single-post__post">
           <img src={EgImg} alt="postImg" className="single-post__img" />
           <div className="single-post__author">
-            <p className="single-post__username">username</p>
+            <div className="single-post__username-and-feature">
+              <p className="single-post__username">username</p>
+              <SlOptions className="single-post__options" />
+            </div>
             <div className="single-post__likes">
               <p className="single-post__num-like">12</p>
               <IoHeart className="single-post__like-icon" />

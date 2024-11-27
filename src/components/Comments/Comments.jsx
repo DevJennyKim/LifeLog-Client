@@ -1,4 +1,5 @@
 import './Comments.scss';
+import { SlOptions } from 'react-icons/sl';
 
 function Comments() {
   return (
@@ -16,17 +17,32 @@ function Comments() {
       </form>
       <div className="comments__list">
         <h3 className="comments__title">3 Comments</h3>
-        <div className="comments__item-container">
-          <div className="comments__item">
-            <div className="comments__author">
+        <div className="comments__item">
+          <div className="comments__author">
+            <div className="comments__username-and-feature">
               <p className="comments__username">username</p>
-              <p className="comments__created-at">2024.11.18</p>
+              <SlOptions className="comments__options" />
             </div>
-            <p className="comments__item-comment">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi
-              quis debitis accusantium.
-            </p>
+            <p className="comments__created-at">2024.11.18</p>
           </div>
+          <p className="comments__comment">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi quis
+            debitis accusantium.
+          </p>
+        </div>
+        {/*  */}
+        <div className="comments__item">
+          <div className="comments__author">
+            <div className="comments__username-and-feature">
+              <p className="comments__username">username</p>
+              <SlOptions className="comments__options" />
+            </div>
+            <p className="comments__created-at">2024.11.18</p>
+          </div>
+          <p className="comments__comment">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi quis
+            debitis accusantium.
+          </p>
         </div>
       </div>
     </div>
