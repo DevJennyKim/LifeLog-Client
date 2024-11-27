@@ -23,7 +23,6 @@ function PostPage() {
       try {
         const data = await getPostsByCategory(categoryId);
         setPosts(data || []);
-        console.log('data by category ', data);
       } catch (error) {}
     };
     if (categoryId) {
