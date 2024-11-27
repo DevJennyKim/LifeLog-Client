@@ -1,7 +1,7 @@
 import React from 'react';
 
 function AddPostPage() {
-  return <div>AddPostPage</div>;
+  return <div></div>;
 }
 
 export default AddPostPage;
