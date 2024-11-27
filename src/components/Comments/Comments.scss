@@ -1,0 +1,19 @@
+@use '../../style/partials/global' as *;
+@use '../../style/partials/mixins' as *;
+@use '../../style/partials/variables' as *;
+
+.comments {
+  margin: 4% 10% 10% 10%;
+  &__form {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+    gap: 1rem;
+  }
+  &__input {
+    flex: 1.5;
+  }
+  &__submit {
+    flex: 0.5;
+  }
+}
