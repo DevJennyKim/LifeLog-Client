@@ -69,20 +69,18 @@
       display: flex;
       left: 0;
     }
+  }
+  &__links {
+    text-decoration: none;
+    color: #222222;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 1rem 0;
 
-    &__links {
-      text-decoration: none;
+    &:hover {
       color: #555;
-      font-size: 1.6rem;
-      font-weight: 600;
-      margin: 1rem 0;
-
-      &:hover {
-        color: #333;
-      }
     }
   }
-
   &__dropdown {
     display: none;
     position: relative;
@@ -142,21 +140,6 @@
       flex-wrap: nowrap;
       height: 8rem;
     }
-
-    // &__toggle {
-    //   display: none;
-    // }
-
-    // &__menu {
-    //   display: flex;
-    //   flex-direction: row;
-    //   align-items: center;
-    //   gap: 5rem;
-    //   position: static;
-    //   width: auto;
-    //   box-shadow: none;
-    //   padding: 0;
-    // }
 
     &__dropdown {
       display: none;

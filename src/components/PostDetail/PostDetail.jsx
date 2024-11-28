@@ -2,20 +2,34 @@ import { IoHeart } from 'react-icons/io5';
 import { SlOptions } from 'react-icons/sl';
 import formatCreatedAt from '../../utils/dateUtils';
 import { useState } from 'react';
-import getTextWithHTML from '../../utils/getTextUtils';
+import { getTextWithHTML } from '../../utils/getTextUtils';
+import { deletePost } from '../../api/api';
+import { useNavigate } from 'react-router-dom';
 
 function PostDetail({ singlePost, currentUser }) {
   const isAuthor = currentUser?.name === singlePost?.username;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
   const handleOptionsClick = () => {
     setIsMenuOpen((prev) => !prev);
   };
+
   const handleEditClick = () => {
-    console.log('Editing post...');
+    navigate(`/edit-post/${singlePost.id}`, { state: { singlePost } });
   };
-  const handleDeleteClick = () => {
-    console.log('Deleting post...');
+
+  const handleDeleteClick = async () => {
+    try {
+      const deletedPost = await deletePost(singlePost.id);
+      console.log('Post deleted:', deletedPost);
+      onPostDelete(singlePost.id);
+      navigate('/');
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
   };
+
   return (
     <div className="single-post" key={singlePost.id}>
       <div className="single-post__container">

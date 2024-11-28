@@ -74,6 +74,28 @@ const createPost = async (postData) => {
     console.error('Error creating post:', error);
   }
 };
+
+const deletePost = async (postId) => {
+  try {
+    const url = `/api/posts/${postId}`;
+    const { data } = await axios.delete(`${baseUrl}${url}`);
+    return data;
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    throw error;
+  }
+};
+
+const updatePost = async (postId, postData) => {
+  try {
+    const url = `/api/posts/${postId}`;
+    const { data } = await axios.delete(`${baseUrl}${url}`, postData);
+    return data;
+  } catch (error) {
+    console.error('Error updating post:', error);
+    throw error;
+  }
+};
 export {
   getCategory,
   getPosts,
@@ -82,4 +104,6 @@ export {
   getCommentsByPostId,
   uploadImage,
   createPost,
+  deletePost,
+  updatePost,
 };

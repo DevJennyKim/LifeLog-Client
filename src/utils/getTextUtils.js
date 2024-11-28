@@ -2,5 +2,8 @@ const getTextWithHTML = (html) => {
   const doc = new DOMParser().parseFromString(html, 'text/html');
   return doc.body.innerHTML;
 };
-
-export default getTextWithHTML;
+const getText = (html) => {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  return doc.body.textContent;
+};
+export { getTextWithHTML, getText };

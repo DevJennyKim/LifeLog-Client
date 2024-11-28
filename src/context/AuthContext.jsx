@@ -16,9 +16,19 @@ const getCookie = (name) => {
 };
 
 const AuthContextProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(
-    JSON.parse(localStorage.getItem('user')) || null
-  );
+  const [currentUser, setCurrentUser] = useState(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const { user, expiryTime } = JSON.parse(storedUser);
+      const now = new Date().getTime();
+      if (now > expiryTime) {
+        localStorage.removeItem('user');
+        return null;
+      }
+      return user;
+    }
+    return null;
+  });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const login = async (inputs) => {
@@ -46,9 +56,14 @@ const AuthContextProvider = ({ children }) => {
       console.error('Error during logout:', error);
     }
   };
+
   useEffect(() => {
     if (currentUser) {
-      localStorage.setItem('user', JSON.stringify(currentUser));
+      const expiryTime = new Date().getTime() + 2 * 60 * 60 * 1000;
+      localStorage.setItem(
+        'user',
+        JSON.stringify({ user: currentUser, expiryTime })
+      );
     } else {
       localStorage.removeItem('user');
     }

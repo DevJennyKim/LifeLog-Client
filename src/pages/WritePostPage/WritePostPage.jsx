@@ -1,20 +1,43 @@
-import './AddPostPage.scss';
+import './WritePostPage.scss';
 import { Editor } from '@toast-ui/react-editor';
-
 import '@toast-ui/editor/toastui-editor.css';
 import { useEffect, useRef, useState } from 'react';
-import { getCategory, createPost, uploadImage } from '../../api/api';
+import {
+  getCategory,
+  createPost,
+  uploadImage,
+  updatePost,
+} from '../../api/api';
 import { useAuth } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
-function AddPostPage() {
+function WritePostPage({ action }) {
   const editorRef = useRef();
   const navigate = useNavigate();
   const { currentUser } = useAuth();
+  const [title, setTitle] = useState('');
   const [postContent, setPostContent] = useState('');
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [uploadedImages, setUploadedImages] = useState([]);
+  const [error, setError] = useState({});
+  const {
+    state: { post },
+  } = useLocation();
+  console.log('Location state:', useLocation());
+  console.log('singlePost', post);
+
+  useEffect(() => {
+    if (action === 'update' && post) {
+      setTitle(post.title);
+      setSelectedCategory(post.categoryId);
+      setPostContent(post.content);
+      if (editorRef.current) {
+        editorRef.current.getInstance().setHTML(post.content || '');
+      }
+    }
+  }, [action, post]);
 
   const onChangeGetHTML = () => {
     const data = editorRef.current.getInstance().getHTML();
@@ -30,9 +53,12 @@ function AddPostPage() {
         console.error('Error fetching categories:', error);
       }
     };
-
     fetchCategories();
   }, []);
+
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
@@ -50,12 +76,30 @@ function AddPostPage() {
     return { imageUrls, cleanHTML };
   };
 
+  const validateForm = () => {
+    const errors = {};
+    if (!title) {
+      errors.title = 'error';
+    }
+    if (!selectedCategory) {
+      errors.category = 'error';
+    }
+    if (!postContent || postContent.trim() === '<p><br></p>') {
+      errors.content = 'Content is required';
+    }
+
+    setError(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('postContent', postContent);
+
+    if (!validateForm()) {
+      return;
+    }
+
     const { imageUrls, cleanHTML } = extractImageUrlsAndCleanHTML(postContent);
-    console.log('cleanHTML', cleanHTML);
-    console.log('imageUrls', imageUrls);
     const imageUrl =
       uploadedImages.length > 0 ? uploadedImages[0] : imageUrls[0] || '';
 
@@ -68,12 +112,36 @@ function AddPostPage() {
     };
 
     try {
-      const response = await createPost(postData);
-      if (response) {
-        alert('Post created successfully');
-        navigate(-1);
-      } else {
-        alert('Failed to create post');
+      if (action === 'add') {
+        const response = await createPost(postData);
+        if (response) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Post Created!',
+            text: 'Your post is now live. Thank you for sharing your story.',
+            position: 'center-center',
+            timerProgressBar: true,
+            timer: 1500,
+            showConfirmButton: false,
+            didClose: () => {
+              navigate('/');
+            },
+          });
+        }
+      } else if (action === 'update') {
+        const response = await updatePost(post.id, postData);
+        if (response) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Post Updated!',
+            text: 'Your post is updated! Thank you for sharing your story.',
+            timer: 1500,
+            showConfirmButton: false,
+            didClose: () => {
+              navigate(`/posts/${post.id}`);
+            },
+          });
+        }
       }
     } catch (error) {
       console.error('Error submitting post:', error);
@@ -106,13 +174,18 @@ function AddPostPage() {
             <div className="write__contents">
               <input
                 type="text"
-                className="write__input-title"
+                className={`write__input-title ${
+                  error.title ? 'write--error' : ''
+                }`}
+                onChange={handleTitleChange}
                 placeholder="Title"
               />
               <div className="write__category-container">
                 <select
                   id="category"
-                  className="write__category-select"
+                  className={`write__category-select ${
+                    error.category ? 'write--error' : ''
+                  }`}
                   value={selectedCategory}
                   onChange={handleCategoryChange}
                 >
@@ -143,9 +216,16 @@ function AddPostPage() {
                 }}
               />
             </div>
-            <button type="submit" className="write__submit">
-              Publish
-            </button>
+            <div className="write__btn-container">
+              <button type="submit" className="write__submit">
+                Publish
+              </button>
+              {error.content && (
+                <p className="write__error write__error--left">
+                  {error.content}
+                </p>
+              )}
+            </div>
           </form>
         </div>
       </section>
@@ -153,4 +233,4 @@ function AddPostPage() {
   );
 }
 
-export default AddPostPage;
+export default WritePostPage;

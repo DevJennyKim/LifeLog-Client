@@ -93,12 +93,11 @@
       }
     }
     &-content {
-      align-items: center;
-      gap: 0.5rem;
-      @include desktop;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       width: 100%;
+      gap: 0.5rem;
     }
     &-title {
       flex: 1.8;
