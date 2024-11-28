@@ -1,5 +1,6 @@
 import './AddPostPage.scss';
 import { Editor } from '@toast-ui/react-editor';
+
 import '@toast-ui/editor/toastui-editor.css';
 import { useEffect, useRef, useState } from 'react';
 import { getCategory, createPost, uploadImage } from '../../api/api';
@@ -37,13 +38,30 @@ function AddPostPage() {
     setSelectedCategory(event.target.value);
   };
 
+  const extractImageUrlsAndCleanHTML = (htmlContent) => {
+    const imageUrls = [];
+
+    const regex = /<img[^>]+src="([^">]+)"/g;
+    let match;
+    while ((match = regex.exec(htmlContent)) !== null) {
+      imageUrls.push(match[1]);
+    }
+    const cleanHTML = htmlContent.replace(/<img[^>]+>/g, '');
+    return { imageUrls, cleanHTML };
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const imageUrl = uploadedImages.length > 0 ? uploadedImages[0] : '';
+    console.log('postContent', postContent);
+    const { imageUrls, cleanHTML } = extractImageUrlsAndCleanHTML(postContent);
+    console.log('cleanHTML', cleanHTML);
+    console.log('imageUrls', imageUrls);
+    const imageUrl =
+      uploadedImages.length > 0 ? uploadedImages[0] : imageUrls[0] || '';
 
     const postData = {
       title: document.querySelector('.write__input-title').value,
-      content: postContent,
+      content: cleanHTML,
       categoryId: selectedCategory,
       imageUrl,
       userId: currentUser.id,
@@ -112,12 +130,11 @@ function AddPostPage() {
                 toolbarItems={[
                   ['heading', 'bold', 'italic', 'strike'],
                   ['hr', 'quote'],
-                  ['ul', 'ol', 'task', 'indent', 'outdent'],
+                  ['ul', 'ol', 'indent', 'outdent'],
                   ['image', 'link'],
-                  ['code', 'codeblock'],
                 ]}
                 height="500px"
-                initialEditType="WTSIWTG"
+                initialEditType="wysiwyg"
                 previewStyle="vertical"
                 ref={editorRef}
                 onChange={onChangeGetHTML}

@@ -2,6 +2,7 @@ import { IoHeart } from 'react-icons/io5';
 import { SlOptions } from 'react-icons/sl';
 import formatCreatedAt from '../../utils/dateUtils';
 import { useState } from 'react';
+import getTextWithHTML from '../../utils/getTextUtils';
 
 function PostDetail({ singlePost, currentUser }) {
   const isAuthor = currentUser?.name === singlePost?.username;
@@ -63,7 +64,12 @@ function PostDetail({ singlePost, currentUser }) {
               <IoHeart className="single-post__like-icon" />
             </div>
           </div>
-          <p className="single-post__desc">{singlePost.desc}</p>
+          <div
+            className="single-post__desc"
+            dangerouslySetInnerHTML={{
+              __html: getTextWithHTML(singlePost.desc),
+            }}
+          ></div>
         </div>
       </div>
     </div>
