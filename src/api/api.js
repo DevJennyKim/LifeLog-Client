@@ -55,10 +55,31 @@ const getCommentsByPostId = async (postId) => {
     throw error;
   }
 };
+
+const uploadImage = async (formData) => {
+  try {
+    const url = '/api/posts/upload';
+    const { data } = await axios.post(`${baseUrl}${url}`, formData);
+    return data;
+  } catch (error) {
+    console.error('Error uploading image:', error);
+  }
+};
+const createPost = async (postData) => {
+  try {
+    const url = '/api/posts';
+    const { data } = await axios.post(`${baseUrl}${url}`, postData);
+    return data;
+  } catch (error) {
+    console.error('Error creating post:', error);
+  }
+};
 export {
   getCategory,
   getPosts,
   getPostsByCategory,
   getSinglePostsById,
   getCommentsByPostId,
+  uploadImage,
+  createPost,
 };

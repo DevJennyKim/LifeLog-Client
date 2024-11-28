@@ -1,0 +1,86 @@
+@use '../../style/partials/global' as *;
+@use '../../style/partials/mixins' as *;
+@use '../../style/partials/variables' as *;
+
+.write {
+  padding: 5rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  &__container {
+    width: 80%;
+    max-width: 800px;
+    background: #ffffff;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+  }
+
+  &__title-container {
+    margin-bottom: 1.5rem;
+    text-align: start;
+    border-bottom: 1px solid black;
+  }
+  &__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    padding: 0.5rem 1rem;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 1rem;
+    gap: 1.5rem;
+  }
+  &__contents {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  &__input-title {
+    font-size: 1.25rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    outline: none;
+    transition: border-color 0.2s;
+    &::placeholder {
+      font-size: 1.7rem;
+    }
+
+    &:focus {
+      border-color: #cacaca;
+    }
+  }
+
+  &__category-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__category-select {
+    font-size: 1.7rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: #cacaca;
+    }
+  }
+  &__submit {
+    @include btn_style;
+    align-self: flex-end;
+    width: 10rem;
+    background-color: $btn-color;
+    font-size: 1.5rem;
+  }
+}
+
+.toastui-editor-defaultUI {
+  border: 1px solid #ddd;
+}
