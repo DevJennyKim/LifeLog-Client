@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 function WritePostPage({ action }) {
   const editorRef = useRef();
   const navigate = useNavigate();
+  const location = useLocation();
   const { currentUser } = useAuth();
   const [title, setTitle] = useState('');
   const [postContent, setPostContent] = useState('');
@@ -24,7 +25,6 @@ function WritePostPage({ action }) {
   const [error, setError] = useState({});
   const [post, setPost] = useState(null);
 
-  const location = useLocation();
   const singlePost = location.state ? location.state.singlePost : null;
 
   useEffect(() => {
@@ -120,7 +120,7 @@ function WritePostPage({ action }) {
           Swal.fire({
             icon: 'success',
             title: 'Post Created!',
-            text: 'Your post is now live. Thank you for sharing your story.',
+            text: 'Your post is now live. Thank you for sharing your story',
             position: 'center-center',
             timerProgressBar: true,
             timer: 1500,
@@ -140,6 +140,9 @@ function WritePostPage({ action }) {
             text: 'Your post is updated! Thank you for sharing your story.',
             timer: 1500,
             showConfirmButton: false,
+            customClass: {
+              popup: 'write__alert',
+            },
             didClose: () => {
               navigate(`/posts/${singlePost.id}`);
             },
@@ -215,6 +218,7 @@ function WritePostPage({ action }) {
                 height="500px"
                 initialEditType="wysiwyg"
                 previewStyle="vertical"
+                initialValue=" "
                 ref={editorRef}
                 onChange={onChangeGetHTML}
                 hooks={{
@@ -222,10 +226,19 @@ function WritePostPage({ action }) {
                 }}
               />
             </div>
-            <div className="write__btn-container">
-              <button type="submit" className="write__submit">
-                {action === 'add' ? 'Publish' : 'Update'}
-              </button>
+            <div className="write__bottom-container">
+              <div className="write__btn-container">
+                <button type="submit" className="write__submit">
+                  {action === 'add' ? 'Publish' : 'Update'}
+                </button>
+                <button
+                  type="button"
+                  className="write__btn-cancel"
+                  onClick={() => navigate(-1)}
+                >
+                  Cancel
+                </button>
+              </div>
               {error.content && (
                 <p className="write__error write__error--left">
                   {error.content}

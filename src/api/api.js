@@ -1,6 +1,17 @@
 import axios from 'axios';
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
+const validatePassword = async (userId, password) => {
+  try {
+    const url = '/api/auth/validate-password';
+    const { data } = await axios.post(url, { userId, password });
+    return data;
+  } catch (error) {
+    console.error('Error validating password:', error);
+    return { error: 'Failed to validate password' };
+  }
+};
+
 const getCategory = async () => {
   try {
     const url = '/api/category';
@@ -49,13 +60,14 @@ const getCommentsByPostId = async (postId) => {
   try {
     const url = `/api/posts/${postId}/comments`;
     const { data } = await axios.get(`${baseUrl}${url}`);
-    if (!data || data.length === 0) {
+    if (!Array.isArray(data)) {
       return 'There are no comments';
+    } else {
+      const sortedData = data.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
+      return sortedData;
     }
-    const sortedData = data.sort(
-      (a, b) => new Date(b.created_at) - new Date(a.created_at)
-    );
-    return sortedData;
   } catch (error) {
     console.error('Error fetching comments by post id:', error);
     throw error;
@@ -145,6 +157,7 @@ const updatePost = async (postId, updateData) => {
 };
 
 export {
+  validatePassword,
   getCategory,
   getPosts,
   getPostsByCategory,

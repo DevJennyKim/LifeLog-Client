@@ -1,10 +1,9 @@
 import './Comments.scss';
 import { SlOptions } from 'react-icons/sl';
 import formatCreatedAt from '../../utils/dateUtils';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { addComment, deleteComment, updateComment } from '../../api/api';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
 
 function Comments({ comments, currentUser, singlePost, setComments }) {
   const [openMenu, setOpenMenu] = useState({});
@@ -12,7 +11,6 @@ function Comments({ comments, currentUser, singlePost, setComments }) {
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [error, setError] = useState('');
   const [editedComments, setEditedComments] = useState({});
-  const navigate = useNavigate();
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
@@ -29,6 +27,10 @@ function Comments({ comments, currentUser, singlePost, setComments }) {
     setEditedComments((prevState) => ({
       ...prevState,
       [commentId]: commentText,
+    }));
+    setOpenMenu((prevState) => ({
+      ...prevState,
+      [commentId]: false,
     }));
   };
   const handleCommentEditChange = (commentId, e) => {
@@ -70,14 +72,31 @@ function Comments({ comments, currentUser, singlePost, setComments }) {
 
   const handleDeleteClick = async (commentId) => {
     try {
-      const response = await deleteComment(singlePost.id, commentId);
+      Swal.fire({
+        icon: 'question',
+        title: 'Delete',
+        text: 'Do you really want to delete your post?',
+        showDenyButton: true,
+        confirmButtonText: 'Delete',
+        denyButtonText: `Cancel`,
+        customClass: {
+          popup: 'single-post__alert',
+        },
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const response = await deleteComment(singlePost.id, commentId);
 
-      if (response.message === 'Comment deleted successfully') {
-        setComments((prevComments) =>
-          prevComments.filter((comment) => comment.id !== commentId)
-        );
-        alert('deleted!');
-      }
+          if (response.message === 'Comment deleted successfully') {
+            setComments((prevComments) =>
+              prevComments.filter((comment) => comment.id !== commentId)
+            );
+          }
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+          });
+        }
+      });
     } catch (error) {
       console.error('Error deleting comment:', error);
     }

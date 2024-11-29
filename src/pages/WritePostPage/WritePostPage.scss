@@ -73,17 +73,31 @@
       border-color: #cacaca;
     }
   }
+  &__bottom-container {
+    display: flex;
+  }
   &__btn-container {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
+    flex-grow: 1;
+    gap: 1rem;
   }
   &__submit {
     @include btn_style;
-    align-self: flex-end;
     width: 10rem;
     background-color: $btn-color;
     font-size: 1.5rem;
+    &:hover {
+      background-color: $btn-hover;
+    }
+  }
+  &__btn-cancel {
+    @include btn_style;
+    background-color: white;
+    width: 10rem;
+    font-size: 1.6rem;
+    &:hover {
+      background-color: rgb(230, 230, 230);
+    }
   }
   &--error {
     border-color: red;
@@ -91,7 +105,6 @@
   &__error {
     color: red;
     font-size: 1.2rem;
-    font-size: 1.4rem;
   }
 }
 

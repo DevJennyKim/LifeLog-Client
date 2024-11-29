@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { getTextWithHTML } from '../../utils/getTextUtils';
 import { deletePost } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function PostDetail({ singlePost, currentUser }) {
   const isAuthor = currentUser?.name === singlePost?.username;
@@ -21,9 +22,28 @@ function PostDetail({ singlePost, currentUser }) {
 
   const handleDeleteClick = async () => {
     try {
-      const deletedPost = await deletePost(singlePost.id);
-      console.log('Post deleted:', deletedPost);
-      navigate('/');
+      Swal.fire({
+        icon: 'question',
+        title: 'Delete',
+        text: 'Do you really want to delete your post?',
+        showDenyButton: true,
+        confirmButtonText: 'Delete',
+        denyButtonText: `Cancel`,
+        customClass: {
+          popup: 'single-post__alert',
+        },
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const deletedPost = await deletePost(singlePost.id);
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            didClose: () => {
+              navigate('/'); // navigate는 여기서 사용하므로 문제가 없을 것입니다.
+            },
+          });
+        }
+      });
     } catch (error) {
       console.error('Error deleting post:', error);
     }
