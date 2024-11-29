@@ -15,7 +15,10 @@ const getPosts = async () => {
   try {
     const url = '/api/posts';
     const { data } = await axios.get(`${baseUrl}${url}`);
-    return data;
+    const sortedData = data.sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    );
+    return sortedData;
   } catch (error) {
     console.error('Error getting Posts: ', error);
   }
@@ -86,16 +89,21 @@ const deletePost = async (postId) => {
   }
 };
 
-const updatePost = async (postId, postData) => {
+const updatePost = async (postId, updateData) => {
   try {
+    console.log('Data', { postId, updateData });
+    console.log('Requesting...');
     const url = `/api/posts/${postId}`;
-    const { data } = await axios.delete(`${baseUrl}${url}`, postData);
+    const { data } = await axios.put(`${baseUrl}${url}`, updateData);
+    console.log('Got a data :', data);
     return data;
   } catch (error) {
     console.error('Error updating post:', error);
     throw error;
   }
 };
+
+// const addComment = async();
 export {
   getCategory,
   getPosts,

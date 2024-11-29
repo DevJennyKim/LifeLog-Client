@@ -15,9 +15,12 @@ function Comments({ comments, currentUser }) {
   const handleDeleteClick = () => {
     console.log('Deleting post...');
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
     <div className="comments">
-      <form action="" className="comments__form">
+      <form onSubmit={handleSubmit} className="comments__form">
         <input
           type="text"
           className="comments__input"

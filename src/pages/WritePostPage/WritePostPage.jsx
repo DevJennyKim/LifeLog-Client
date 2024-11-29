@@ -22,22 +22,28 @@ function WritePostPage({ action }) {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [uploadedImages, setUploadedImages] = useState([]);
   const [error, setError] = useState({});
-  const {
-    state: { post },
-  } = useLocation();
-  console.log('Location state:', useLocation());
-  console.log('singlePost', post);
+  const [post, setPost] = useState(null);
+
+  const location = useLocation();
+  const singlePost = location.state ? location.state.singlePost : null;
+
+  console.log('S: ', singlePost);
 
   useEffect(() => {
-    if (action === 'update' && post) {
-      setTitle(post.title);
-      setSelectedCategory(post.categoryId);
-      setPostContent(post.content);
-      if (editorRef.current) {
-        editorRef.current.getInstance().setHTML(post.content || '');
+    if (action === 'update' && singlePost) {
+      if (singlePost) {
+        setPost(singlePost);
+        setTitle(singlePost.title);
+        setSelectedCategory(singlePost.category_id);
+        setPostContent(`![image](${singlePost.img})`, singlePost.desc);
+        if (editorRef.current) {
+          editorRef.current.getInstance().setHTML(singlePost.desc || '');
+        }
       }
     }
-  }, [action, post]);
+  }, [action, singlePost]);
+
+  console.log(postContent);
 
   const onChangeGetHTML = () => {
     const data = editorRef.current.getInstance().getHTML();
@@ -129,7 +135,8 @@ function WritePostPage({ action }) {
           });
         }
       } else if (action === 'update') {
-        const response = await updatePost(post.id, postData);
+        console.log('update post data:', postData);
+        const response = await updatePost(singlePost.id, postData);
         if (response) {
           Swal.fire({
             icon: 'success',
@@ -138,7 +145,7 @@ function WritePostPage({ action }) {
             timer: 1500,
             showConfirmButton: false,
             didClose: () => {
-              navigate(`/posts/${post.id}`);
+              navigate(`/posts/${singlePost.id}`);
             },
           });
         }
@@ -168,7 +175,9 @@ function WritePostPage({ action }) {
       <section className="write">
         <div className="write__container">
           <div className="write__title-container">
-            <h1 className="write__title">Write your Life</h1>
+            <h1 className="write__title">
+              {action === 'add' ? 'Write your Life' : 'Edit your story'}
+            </h1>
           </div>
           <form className="write__form" onSubmit={handleSubmit}>
             <div className="write__contents">
@@ -178,6 +187,7 @@ function WritePostPage({ action }) {
                   error.title ? 'write--error' : ''
                 }`}
                 onChange={handleTitleChange}
+                value={title}
                 placeholder="Title"
               />
               <div className="write__category-container">
@@ -218,7 +228,7 @@ function WritePostPage({ action }) {
             </div>
             <div className="write__btn-container">
               <button type="submit" className="write__submit">
-                Publish
+                {action === 'add' ? 'Publish' : 'Update'}
               </button>
               {error.content && (
                 <p className="write__error write__error--left">

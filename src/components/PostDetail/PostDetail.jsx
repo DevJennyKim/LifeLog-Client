@@ -23,7 +23,6 @@ function PostDetail({ singlePost, currentUser }) {
     try {
       const deletedPost = await deletePost(singlePost.id);
       console.log('Post deleted:', deletedPost);
-      onPostDelete(singlePost.id);
       navigate('/');
     } catch (error) {
       console.error('Error deleting post:', error);
