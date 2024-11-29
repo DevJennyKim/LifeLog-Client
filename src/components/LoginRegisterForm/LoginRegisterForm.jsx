@@ -65,7 +65,18 @@ function LoginRegisterForm({ action }) {
         navigate('/');
       } else {
         await register(payload);
-        navigate('/login');
+        Swal.fire({
+          icon: 'success',
+          title: '🎉Congratulation🎉',
+          text: 'You have been registered!!',
+          position: 'center-center',
+          timerProgressBar: true,
+          timer: 1500,
+          showConfirmButton: false,
+          didClose: () => {
+            navigate('/login');
+          },
+        });
       }
     } catch (error) {
       console.error(error);

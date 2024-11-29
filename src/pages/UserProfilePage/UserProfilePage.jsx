@@ -1,15 +1,64 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-
+import { userInfoUpdate } from '../../api/api';
+import Swal from 'sweetalert2';
 import './UserProfilePage.scss';
+import { useState } from 'react';
 
 function UserProfilePage() {
   const { currentUser } = useAuth();
+  const [username, setUsername] = useState(currentUser?.name || '');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Passwords and confirm password do not match',
+      });
+      return;
+    }
+    const updateData = {
+      userId: currentUser.id,
+      username,
+      password: password || undefined,
+    };
+    try {
+      const response = await userInfoUpdate(currentUser.id, updateData);
+      Swal.fire({
+        icon: 'success',
+        title: 'Updated!',
+        text: 'Your information has been updated!',
+        position: 'center-center',
+        timerProgressBar: true,
+        timer: 1500,
+        showConfirmButton: false,
+        didClose: () => {
+          navigate('/');
+        },
+      });
+    } catch (error) {
+      console.error('Error updating user profile:', error);
+      if (error.response && error.response.status === 409) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Username already exists!',
+          text: 'The username you entered is already taken. Please choose another one.',
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Failed to update profile',
+        });
+      }
+    }
   };
+
   return (
     <section className="profile">
       <div className="profile__container">
@@ -33,7 +82,8 @@ function UserProfilePage() {
               type="text"
               id="username"
               className="profile__input"
-              defaultValue={currentUser?.name || ''}
+              onChange={(e) => setUsername(e.target.value)}
+              defaultValue={username}
             />
           </div>
           <div className="profile__form-group">
@@ -45,6 +95,7 @@ function UserProfilePage() {
               id="password"
               className="profile__input"
               placeholder="Enter new password"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="profile__form-group">
@@ -56,6 +107,7 @@ function UserProfilePage() {
               id="confirm-password"
               className="profile__input"
               placeholder="Confirm new password"
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
           <div className="profile__button-container">

@@ -155,6 +155,16 @@ const updatePost = async (postId, updateData) => {
     throw error;
   }
 };
+const userInfoUpdate = async (userId, updateData) => {
+  try {
+    const url = `/api/auth/update-user/${userId}`;
+    const { data } = await axios.put(`${baseUrl}${url}`, updateData);
+    return data;
+  } catch (error) {
+    console.error('Error updating user info: ', error);
+    throw error;
+  }
+};
 
 export {
   validatePassword,
@@ -170,4 +180,5 @@ export {
   addComment,
   deleteComment,
   updateComment,
+  userInfoUpdate,
 };
