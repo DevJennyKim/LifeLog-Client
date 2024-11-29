@@ -27,8 +27,6 @@ function WritePostPage({ action }) {
   const location = useLocation();
   const singlePost = location.state ? location.state.singlePost : null;
 
-  console.log('S: ', singlePost);
-
   useEffect(() => {
     if (action === 'update' && singlePost) {
       if (singlePost) {
@@ -42,8 +40,6 @@ function WritePostPage({ action }) {
       }
     }
   }, [action, singlePost]);
-
-  console.log(postContent);
 
   const onChangeGetHTML = () => {
     const data = editorRef.current.getInstance().getHTML();

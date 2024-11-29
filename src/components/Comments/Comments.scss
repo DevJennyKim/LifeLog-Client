@@ -32,6 +32,9 @@
       font-size: 1.7rem;
       padding: 0 1.5rem;
     }
+    &:hover {
+      background-color: $btn-hover;
+    }
   }
 
   &__list {
@@ -128,5 +131,9 @@
     border-radius: 0;
     background-color: white;
     border: 1px solid darkgray;
+
+    &:hover {
+      background-color: rgb(230, 230, 230);
+    }
   }
 }

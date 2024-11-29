@@ -95,11 +95,17 @@ function Comments({ comments, currentUser, singlePost, setComments }) {
         newComment
       );
       if (response.commentId) {
-        comments.push({
+        const newCommentObject = {
           id: response.commentId,
           username: currentUser.name,
           comment: newComment,
           created_at: new Date(),
+        };
+        setComments((prevComments) => {
+          const updatedComments = [newCommentObject, ...prevComments];
+          return updatedComments.sort(
+            (a, b) => new Date(b.created_at) - new Date(a.created_at)
+          );
         });
         setNewComment('');
       }
