@@ -7,6 +7,7 @@ import PostPage from './pages/PostPage/PostPage';
 import PostDetailPage from './pages/PostDetailPage/PostDetailPage';
 import { AuthContextProvider, useAuth } from './context/AuthContext';
 import WritePostPage from './pages/WritePostPage/WritePostPage';
+import UserProfilePage from './pages/UserProfilePage/UserProfilePage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               path="/edit-post/:postId"
               element={<WritePostPage action="update" />}
             />
+            <Route path="/user-profile" element={<UserProfilePage />} />
           </Routes>
         </AuthContextProvider>
       </BrowserRouter>

@@ -3,7 +3,8 @@ import logo from '../../assets/logo/brown.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { getCategory } from '../../api/api';
+import { getCategory, validatePassword } from '../../api/api';
+import Swal from 'sweetalert2';
 
 function Header() {
   const { logout, currentUser } = useAuth();
@@ -30,6 +31,48 @@ function Header() {
   const handleLogout = async () => {
     logout();
     navigate('/');
+  };
+
+  const handleProfileClick = async () => {
+    try {
+      const { value: password } = await Swal.fire({
+        title: 'Enter your password',
+        input: 'password',
+        inputAttributes: {
+          autocapitalize: 'off',
+          placeholder: 'Password',
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        showLoaderOnConfirm: true,
+        customClass: {
+          popup: 'nav__alert',
+        },
+        preConfirm: async (inputPassword) => {
+          try {
+            const response = await validatePassword(
+              currentUser.id,
+              inputPassword
+            );
+            if (!response || response.error) {
+              return Swal.showValidationMessage(
+                'Invalid password, please try again.'
+              );
+            }
+            return true;
+          } catch (error) {
+            return Swal.showValidationMessage(`Request failed: ${error}`);
+          }
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      });
+
+      if (password) {
+        navigate('/user-profile');
+      }
+    } catch (error) {
+      console.error('Error handling profile click:', error);
+    }
   };
   return (
     <nav className="nav">
@@ -65,16 +108,23 @@ function Header() {
               ))}
           </div>
         </div>
-        <Link to="/guestbook" className="nav__links">
+        <Link
+          to="/guestbook"
+          className="nav__links"
+          onClick={(event) => {
+            event.preventDefault();
+            alert('Coming Soon!');
+          }}
+        >
           Guest Book
         </Link>
         <div className="nav__users">
-          <Link to="/" className="nav__link-username">
+          <button className="nav__links nav__btn" onClick={handleProfileClick}>
             {currentUser.name}
-          </Link>
+          </button>
           <button
             type="button"
-            className="nav__links nav__logout"
+            className="nav__links nav__btn"
             onClick={handleLogout}
           >
             Logout
