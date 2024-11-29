@@ -2,19 +2,33 @@ import { IoHeart } from 'react-icons/io5';
 import { SlOptions } from 'react-icons/sl';
 import formatCreatedAt from '../../utils/dateUtils';
 import { useState } from 'react';
+import { getTextWithHTML } from '../../utils/getTextUtils';
+import { deletePost } from '../../api/api';
+import { useNavigate } from 'react-router-dom';
 
 function PostDetail({ singlePost, currentUser }) {
   const isAuthor = currentUser?.name === singlePost?.username;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
   const handleOptionsClick = () => {
     setIsMenuOpen((prev) => !prev);
   };
+
   const handleEditClick = () => {
-    console.log('Editing post...');
+    navigate(`/edit-post/${singlePost.id}`, { state: { singlePost } });
   };
-  const handleDeleteClick = () => {
-    console.log('Deleting post...');
+
+  const handleDeleteClick = async () => {
+    try {
+      const deletedPost = await deletePost(singlePost.id);
+      console.log('Post deleted:', deletedPost);
+      navigate('/');
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
   };
+
   return (
     <div className="single-post" key={singlePost.id}>
       <div className="single-post__container">
@@ -63,7 +77,12 @@ function PostDetail({ singlePost, currentUser }) {
               <IoHeart className="single-post__like-icon" />
             </div>
           </div>
-          <p className="single-post__desc">{singlePost.desc}</p>
+          <div
+            className="single-post__desc"
+            dangerouslySetInnerHTML={{
+              __html: getTextWithHTML(singlePost.desc),
+            }}
+          ></div>
         </div>
       </div>
     </div>

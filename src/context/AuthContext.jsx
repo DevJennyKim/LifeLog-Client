@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 
@@ -16,9 +17,19 @@ const getCookie = (name) => {
 };
 
 const AuthContextProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(
-    JSON.parse(localStorage.getItem('user')) || null
-  );
+  const [currentUser, setCurrentUser] = useState(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const { user, expiryTime } = JSON.parse(storedUser);
+      const now = new Date().getTime();
+      if (now > expiryTime) {
+        localStorage.removeItem('user');
+        return null;
+      }
+      return user;
+    }
+    return null;
+  });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const login = async (inputs) => {
@@ -46,9 +57,42 @@ const AuthContextProvider = ({ children }) => {
       console.error('Error during logout:', error);
     }
   };
+
+  const extendSession = async () => {
+    try {
+      const response = await axios.post(
+        `${baseUrl}/api/auth/extend-session`,
+        {},
+        { withCredentials: true }
+      );
+      const newExpiryTime = new Date().getTime() + 2 * 60 * 60 * 1000; // 2 hours
+      localStorage.setItem(
+        'user',
+        JSON.stringify({ user: currentUser, expiryTime: newExpiryTime })
+      );
+      Swal.fire({
+        icon: 'success',
+        title: 'Session Extended!',
+        text: 'Your session has been extended for another 2 hours.',
+      });
+    } catch (error) {
+      console.error('Error extending session:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Session Extension Failed',
+        text: 'Could not extend the session. Please log in again.',
+      });
+      logout();
+    }
+  };
+
   useEffect(() => {
     if (currentUser) {
-      localStorage.setItem('user', JSON.stringify(currentUser));
+      const expiryTime = new Date().getTime() + 2 * 60 * 60 * 1000;
+      localStorage.setItem(
+        'user',
+        JSON.stringify({ user: currentUser, expiryTime })
+      );
     } else {
       localStorage.removeItem('user');
     }

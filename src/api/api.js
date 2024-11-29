@@ -15,7 +15,10 @@ const getPosts = async () => {
   try {
     const url = '/api/posts';
     const { data } = await axios.get(`${baseUrl}${url}`);
-    return data;
+    const sortedData = data.sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    );
+    return sortedData;
   } catch (error) {
     console.error('Error getting Posts: ', error);
   }
@@ -55,10 +58,60 @@ const getCommentsByPostId = async (postId) => {
     throw error;
   }
 };
+
+const uploadImage = async (formData) => {
+  try {
+    const url = '/api/posts/upload';
+    const { data } = await axios.post(`${baseUrl}${url}`, formData);
+    return data;
+  } catch (error) {
+    console.error('Error uploading image:', error);
+  }
+};
+const createPost = async (postData) => {
+  try {
+    const url = '/api/posts';
+    const { data } = await axios.post(`${baseUrl}${url}`, postData);
+    return data;
+  } catch (error) {
+    console.error('Error creating post:', error);
+  }
+};
+
+const deletePost = async (postId) => {
+  try {
+    const url = `/api/posts/${postId}`;
+    const { data } = await axios.delete(`${baseUrl}${url}`);
+    return data;
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    throw error;
+  }
+};
+
+const updatePost = async (postId, updateData) => {
+  try {
+    console.log('Data', { postId, updateData });
+    console.log('Requesting...');
+    const url = `/api/posts/${postId}`;
+    const { data } = await axios.put(`${baseUrl}${url}`, updateData);
+    console.log('Got a data :', data);
+    return data;
+  } catch (error) {
+    console.error('Error updating post:', error);
+    throw error;
+  }
+};
+
+// const addComment = async();
 export {
   getCategory,
   getPosts,
   getPostsByCategory,
   getSinglePostsById,
   getCommentsByPostId,
+  uploadImage,
+  createPost,
+  deletePost,
+  updatePost,
 };

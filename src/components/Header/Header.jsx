@@ -79,7 +79,7 @@ function Header() {
           >
             Logout
           </button>
-          <Link to="/write" className="nav__writing">
+          <Link to="/add-post" className="nav__writing">
             Posting
           </Link>
         </div>

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { format } from 'timeago.js';
+import { getText } from '../../utils/getTextUtils';
 
 function PostList({ post }) {
   return (
@@ -12,7 +13,7 @@ function PostList({ post }) {
         />
         <div className="posts__item-content">
           <h1 className="posts__item-title">{post && post.title}</h1>
-          <p className="posts__item-p">{post && post.desc}</p>
+          <p className="posts__item-p">{getText(post.desc)}</p>
           <div className="posts__item-author">
             <p className="posts__item-username">
               Posted by {post && post.username}
