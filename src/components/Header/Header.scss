@@ -51,7 +51,7 @@
   }
 
   &__menu {
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     position: absolute;
@@ -65,17 +65,9 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 
-    transform: translateY(-20px);
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out,
-      max-height 0.3s ease-in-out;
-
     &--open {
-      transform: translateY(0);
-      opacity: 1;
-      max-height: 500px;
+      display: flex;
+      left: 0;
     }
   }
   &__links {
@@ -191,7 +183,7 @@
     &__dropdown {
       display: none;
       position: absolute;
-      top: 87%;
+      top: 88%;
       left: -3.5rem;
       background-color: $bg-color;
       flex-direction: column;

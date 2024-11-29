@@ -2,21 +2,64 @@ import './Comments.scss';
 import { SlOptions } from 'react-icons/sl';
 import formatCreatedAt from '../../utils/dateUtils';
 import { useState } from 'react';
+import { addComment, deleteComment } from '../../api/api';
+import Swal from 'sweetalert2';
 
-function Comments({ comments, currentUser }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+function Comments({ comments, currentUser, singlePost, setComments }) {
+  const [openMenu, setOpenMenu] = useState({});
+  const [newComment, setNewComment] = useState('');
+  const [error, setError] = useState('');
 
-  const handleOptionsClick = () => {
-    setIsMenuOpen((prev) => !prev);
+  const handleCommentChange = (e) => {
+    setNewComment(e.target.value);
+  };
+  const handleOptionsClick = (commentId) => {
+    setOpenMenu((prevState) => ({
+      ...prevState,
+      [commentId]: !prevState[commentId],
+    }));
   };
   const handleEditClick = () => {
     console.log('Editing post...');
   };
-  const handleDeleteClick = () => {
-    console.log('Deleting post...');
+  const handleDeleteClick = async (commentId) => {
+    try {
+      const response = await deleteComment(singlePost.id, commentId);
+
+      if (response.message === 'Comment deleted successfully') {
+        setComments((prevComments) =>
+          prevComments.filter((comment) => comment.id !== commentId)
+        );
+        alert('deleted!');
+      }
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
   };
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!newComment.trim()) {
+      return;
+    }
+    try {
+      const response = await addComment(
+        singlePost.id,
+        currentUser.id,
+        newComment
+      );
+      if (response.commentId) {
+        comments.push({
+          id: response.commentId,
+          username: currentUser.name,
+          comment: newComment,
+          created_at: new Date(),
+        });
+        setNewComment('');
+      }
+    } catch (error) {
+      console.error('Error adding comment:', error);
+    }
   };
   return (
     <div className="comments">
@@ -26,6 +69,8 @@ function Comments({ comments, currentUser }) {
           className="comments__input"
           placeholder="Got something to say? Type here!"
           name="comment"
+          value={newComment}
+          onChange={handleCommentChange}
         />
         <button type="submit" className="comments__submit">
           Comment
@@ -52,9 +97,9 @@ function Comments({ comments, currentUser }) {
                       <div className="comments__options-container">
                         <SlOptions
                           className="comments__options"
-                          onClick={handleOptionsClick}
+                          onClick={() => handleOptionsClick(comment.id)}
                         />
-                        {isMenuOpen && (
+                        {openMenu[comment.id] && (
                           <div className="comments__options-menu">
                             <button
                               onClick={handleEditClick}
@@ -63,7 +108,7 @@ function Comments({ comments, currentUser }) {
                               Edit
                             </button>
                             <button
-                              onClick={handleDeleteClick}
+                              onClick={() => handleDeleteClick(comment.id)}
                               className="comments__options-btn"
                             >
                               Delete

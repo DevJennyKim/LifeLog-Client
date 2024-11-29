@@ -52,9 +52,39 @@ const getCommentsByPostId = async (postId) => {
     if (!data || data.length === 0) {
       return 'There are no comments';
     }
-    return data;
+    const sortedData = data.sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    );
+    return sortedData;
   } catch (error) {
     console.error('Error fetching comments by post id:', error);
+    throw error;
+  }
+};
+
+const addComment = async (postId, userId, comment) => {
+  try {
+    const url = `/api/posts/${postId}/comments`;
+    const response = await axios.post(`${baseUrl}${url}`, {
+      userId,
+      postId,
+      comment,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error adding comment:', error);
+    throw error;
+  }
+};
+
+const deleteComment = async (postId, commentId) => {
+  try {
+    const { data } = await axios.delete(
+      `${baseUrl}/api/posts/${postId}/comments/${commentId}`
+    );
+    return data;
+  } catch (error) {
+    console.error('Error deleting comment:', error);
     throw error;
   }
 };
@@ -91,11 +121,8 @@ const deletePost = async (postId) => {
 
 const updatePost = async (postId, updateData) => {
   try {
-    console.log('Data', { postId, updateData });
-    console.log('Requesting...');
     const url = `/api/posts/${postId}`;
     const { data } = await axios.put(`${baseUrl}${url}`, updateData);
-    console.log('Got a data :', data);
     return data;
   } catch (error) {
     console.error('Error updating post:', error);
@@ -103,7 +130,6 @@ const updatePost = async (postId, updateData) => {
   }
 };
 
-// const addComment = async();
 export {
   getCategory,
   getPosts,
@@ -114,4 +140,6 @@ export {
   createPost,
   deletePost,
   updatePost,
+  addComment,
+  deleteComment,
 };
