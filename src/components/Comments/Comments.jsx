@@ -5,7 +5,13 @@ import { useState } from 'react';
 import { addComment, deleteComment, updateComment } from '../../api/api';
 import Swal from 'sweetalert2';
 
-function Comments({ comments, currentUser, singlePost, setComments }) {
+function Comments({
+  comments,
+  currentUser,
+  singlePost,
+  setComments,
+  fetchComments,
+}) {
   const [openMenu, setOpenMenu] = useState({});
   const [newComment, setNewComment] = useState('');
   const [editingCommentId, setEditingCommentId] = useState(null);
@@ -85,11 +91,8 @@ function Comments({ comments, currentUser, singlePost, setComments }) {
       }).then(async (result) => {
         if (result.isConfirmed) {
           const response = await deleteComment(singlePost.id, commentId);
-
           if (response.message === 'Comment deleted successfully') {
-            setComments((prevComments) =>
-              prevComments.filter((comment) => comment.id !== commentId)
-            );
+            fetchComments();
           }
           Swal.fire({
             icon: 'success',
@@ -121,10 +124,15 @@ function Comments({ comments, currentUser, singlePost, setComments }) {
           created_at: new Date(),
         };
         setComments((prevComments) => {
-          const updatedComments = [newCommentObject, ...prevComments];
-          return updatedComments.sort(
-            (a, b) => new Date(b.created_at) - new Date(a.created_at)
-          );
+          if (typeof prevComments === 'string') {
+            const firstComment = [newCommentObject];
+            return firstComment;
+          } else {
+            const updatedComments = [newCommentObject, ...prevComments];
+            return updatedComments.sort(
+              (a, b) => new Date(b.created_at) - new Date(a.created_at)
+            );
+          }
         });
         setNewComment('');
       }

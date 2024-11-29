@@ -60,8 +60,8 @@ const getCommentsByPostId = async (postId) => {
   try {
     const url = `/api/posts/${postId}/comments`;
     const { data } = await axios.get(`${baseUrl}${url}`);
-    if (!Array.isArray(data)) {
-      return 'There are no comments';
+    if (typeof data === 'string') {
+      return data;
     } else {
       const sortedData = data.sort(
         (a, b) => new Date(b.created_at) - new Date(a.created_at)

@@ -1,4 +1,4 @@
-import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2';
 import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 
@@ -32,6 +32,7 @@ const AuthContextProvider = ({ children }) => {
   });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   const login = async (inputs) => {
     const url = '/api/auth/login';
     const response = await axios.post(`${baseUrl}${url}`, inputs, {
@@ -42,6 +43,7 @@ const AuthContextProvider = ({ children }) => {
     localStorage.setItem('user', JSON.stringify(user));
     document.cookie = `access_token=${response.data.token}; path=/; max-age=7200;`;
   };
+
   const logout = async () => {
     try {
       await axios.post(
@@ -58,33 +60,33 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const extendSession = async () => {
-    try {
-      const response = await axios.post(
-        `${baseUrl}/api/auth/extend-session`,
-        {},
-        { withCredentials: true }
-      );
-      const newExpiryTime = new Date().getTime() + 2 * 60 * 60 * 1000; // 2 hours
-      localStorage.setItem(
-        'user',
-        JSON.stringify({ user: currentUser, expiryTime: newExpiryTime })
-      );
-      Swal.fire({
-        icon: 'success',
-        title: 'Session Extended!',
-        text: 'Your session has been extended for another 2 hours.',
-      });
-    } catch (error) {
-      console.error('Error extending session:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Session Extension Failed',
-        text: 'Could not extend the session. Please log in again.',
-      });
-      logout();
-    }
-  };
+  // const extendSession = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       `${baseUrl}/api/auth/extend-session`,
+  //       {},
+  //       { withCredentials: true }
+  //     );
+  //     const newExpiryTime = new Date().getTime() + 2 * 60 * 60 * 1000; // 2 hours
+  //     localStorage.setItem(
+  //       'user',
+  //       JSON.stringify({ user: currentUser, expiryTime: newExpiryTime })
+  //     );
+  //     Swal.fire({
+  //       icon: 'success',
+  //       title: 'Session Extended!',
+  //       text: 'Your session has been extended for another 2 hours.',
+  //     });
+  //   } catch (error) {
+  //     console.error('Error extending session:', error);
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Session Extension Failed',
+  //       text: 'Could not extend the session. Please log in again.',
+  //     });
+  //     logout();
+  //   }
+  // };
 
   useEffect(() => {
     if (currentUser) {
@@ -103,8 +105,20 @@ const AuthContextProvider = ({ children }) => {
     setIsAuthenticated(!!token && !!currentUser);
   }, [currentUser]);
 
+  const register = async (inputs) => {
+    const url = '/api/auth/register';
+    try {
+      const { data } = await axios.post(`${baseUrl}${url}`, inputs, {
+        withCredentials: true,
+      });
+      return data;
+    } catch (error) {
+      console.error('Error during registration:', error);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ currentUser, login, logout }}>
+    <AuthContext.Provider value={{ currentUser, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );
