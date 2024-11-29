@@ -89,6 +89,20 @@ const deleteComment = async (postId, commentId) => {
   }
 };
 
+const updateComment = async (postId, commentId, updatedComment) => {
+  try {
+    const { data } = await axios.put(
+      `${baseUrl}/api/posts/${postId}/comments/${commentId}`,
+      {
+        comment: updatedComment,
+      }
+    );
+    return data;
+  } catch (error) {
+    console.error('Error updating comment:', error);
+    throw error;
+  }
+};
 const uploadImage = async (formData) => {
   try {
     const url = '/api/posts/upload';
@@ -142,4 +156,5 @@ export {
   updatePost,
   addComment,
   deleteComment,
+  updateComment,
 };

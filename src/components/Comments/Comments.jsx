@@ -1,14 +1,18 @@
 import './Comments.scss';
 import { SlOptions } from 'react-icons/sl';
 import formatCreatedAt from '../../utils/dateUtils';
-import { useState } from 'react';
-import { addComment, deleteComment } from '../../api/api';
+import { useEffect, useState } from 'react';
+import { addComment, deleteComment, updateComment } from '../../api/api';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 function Comments({ comments, currentUser, singlePost, setComments }) {
   const [openMenu, setOpenMenu] = useState({});
   const [newComment, setNewComment] = useState('');
+  const [editingCommentId, setEditingCommentId] = useState(null);
   const [error, setError] = useState('');
+  const [editedComments, setEditedComments] = useState({});
+  const navigate = useNavigate();
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
@@ -19,9 +23,51 @@ function Comments({ comments, currentUser, singlePost, setComments }) {
       [commentId]: !prevState[commentId],
     }));
   };
-  const handleEditClick = () => {
-    console.log('Editing post...');
+
+  const handleEditClick = (commentId, commentText) => {
+    setEditingCommentId(commentId);
+    setEditedComments((prevState) => ({
+      ...prevState,
+      [commentId]: commentText,
+    }));
   };
+  const handleCommentEditChange = (commentId, e) => {
+    setEditedComments((prevState) => ({
+      ...prevState,
+      [commentId]: e.target.value,
+    }));
+  };
+
+  const handleSaveEditSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const updatedCommentText = editedComments[editingCommentId];
+
+      const response = await updateComment(
+        singlePost.id,
+        editingCommentId,
+        updatedCommentText
+      );
+      if (response && response.message === 'Comment updated successfully') {
+        setComments((prevComments) =>
+          prevComments.map((comment) =>
+            comment.id === editingCommentId
+              ? { ...comment, comment: updatedCommentText }
+              : comment
+          )
+        );
+        setEditingCommentId(null);
+        setEditedComments((prevState) => {
+          const newState = { ...prevState };
+          delete newState[editingCommentId];
+          return newState;
+        });
+      }
+    } catch (error) {
+      console.error('Error updating comment:', error);
+    }
+  };
+
   const handleDeleteClick = async (commentId) => {
     try {
       const response = await deleteComment(singlePost.id, commentId);
@@ -69,7 +115,7 @@ function Comments({ comments, currentUser, singlePost, setComments }) {
           className="comments__input"
           placeholder="Got something to say? Type here!"
           name="comment"
-          value={newComment}
+          value={newComment || ''}
           onChange={handleCommentChange}
         />
         <button type="submit" className="comments__submit">
@@ -78,7 +124,6 @@ function Comments({ comments, currentUser, singlePost, setComments }) {
       </form>
       <div className="comments__list">
         <h3 className="comments__title">
-          {' '}
           {comments && typeof comments !== 'string'
             ? `${comments.length} Comments`
             : '0 Comments'}
@@ -102,7 +147,9 @@ function Comments({ comments, currentUser, singlePost, setComments }) {
                         {openMenu[comment.id] && (
                           <div className="comments__options-menu">
                             <button
-                              onClick={handleEditClick}
+                              onClick={() =>
+                                handleEditClick(comment.id, comment.comment)
+                              }
                               className="comments__options-btn"
                             >
                               Edit
@@ -122,7 +169,30 @@ function Comments({ comments, currentUser, singlePost, setComments }) {
                     {formatCreatedAt(comment.created_at)}
                   </p>
                 </div>
-                <p className="comments__comment">{comment.comment}</p>
+                {editingCommentId === comment.id ? (
+                  <form
+                    className="comments__edit-container"
+                    onSubmit={handleSaveEditSubmit}
+                  >
+                    <input
+                      type="text"
+                      className="comments__input"
+                      value={editedComments[comment.id] || ''}
+                      onChange={(e) => handleCommentEditChange(comment.id, e)}
+                    />
+                    <button type="submit" className="comments__submit">
+                      Save
+                    </button>
+                    <button
+                      onClick={() => setEditingCommentId(null)}
+                      className="comments__cancel"
+                    >
+                      Cancel
+                    </button>
+                  </form>
+                ) : (
+                  <p className="comments__comment">{comment.comment}</p>
+                )}
               </div>
             );
           })

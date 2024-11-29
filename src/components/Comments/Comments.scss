@@ -118,4 +118,15 @@
   &__no-comment {
     font-size: 1.5rem;
   }
+  &__edit-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  &__cancel {
+    padding: 0 1rem;
+    border-radius: 0;
+    background-color: white;
+    border: 1px solid darkgray;
+  }
 }
