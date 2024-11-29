@@ -16,6 +16,7 @@
     background-color: white;
     border-radius: 8px;
     padding: 2rem;
+    animation: fadeIn 1s ease-out;
   }
 
   &__title-container {
@@ -29,6 +30,7 @@
     @include desktop {
       text-align: start;
     }
+    animation: fadeInDown 0.8s ease-out;
   }
 
   &__title {
@@ -40,6 +42,7 @@
     @include tablet {
       font-size: 3rem;
     }
+    animation: fadeIn 0.7s ease-out;
   }
 
   &__item-link {
@@ -57,12 +60,17 @@
     @include desktop {
       flex-direction: row;
     }
+    animation: fadeInLeft 1s ease-out;
+    opacity: 0;
+    animation: fadeInLeft 1s ease-out forwards;
+
     &-content {
       @include column;
       justify-content: space-around;
       height: 100%;
       width: 100%;
     }
+
     &-img {
       width: 100%;
       object-fit: cover;
@@ -75,7 +83,9 @@
         width: 25rem;
         height: 20rem;
       }
+      animation: scaleUp 0.8s ease-out;
     }
+
     &-title {
       font-size: 2rem;
       margin-bottom: 1.5rem;
@@ -94,6 +104,7 @@
       @include desktop {
         font-size: 3rem;
       }
+      animation: fadeIn 0.8s ease-out;
     }
 
     &-p {
@@ -111,22 +122,25 @@
       @include desktop {
         font-size: 1.6rem;
       }
+      animation: fadeIn 0.7s ease-out;
     }
+
     &-author {
       display: flex;
       justify-content: space-between;
       padding-top: 2rem;
     }
+
     &-username {
       font-size: 1.5rem;
     }
+
     &-created_at {
       font-size: 1.3rem;
     }
-
     &:hover {
       transform: translateY(-5px);
-      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     }
   }
 }

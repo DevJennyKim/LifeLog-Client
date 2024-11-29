@@ -44,17 +44,18 @@ function PostDetailPage() {
       fetchPostsById();
     }
   }, [postId]);
-  useEffect(() => {
-    const fetchComments = async () => {
-      if (postId) {
-        try {
-          const data = await getCommentsByPostId(postId);
-          setComments(data || []);
-        } catch (error) {
-          console.error('Error fetching comments:', error);
-        }
+
+  const fetchComments = async () => {
+    if (postId) {
+      try {
+        const data = await getCommentsByPostId(postId);
+        setComments(data || []);
+      } catch (error) {
+        console.error('Error fetching comments:', error);
       }
-    };
+    }
+  };
+  useEffect(() => {
     fetchComments();
   }, [postId]);
 
@@ -72,6 +73,7 @@ function PostDetailPage() {
           singlePost={singlePost}
           currentUser={currentUser}
           setComments={setComments}
+          fetchComments={fetchComments}
         />
       </section>
     </main>

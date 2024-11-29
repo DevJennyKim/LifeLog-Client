@@ -126,7 +126,7 @@ function WritePostPage({ action }) {
             timer: 1500,
             showConfirmButton: false,
             didClose: () => {
-              navigate('/');
+              navigate(`/posts/${response.postId}`);
             },
           });
         }

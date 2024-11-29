@@ -1,20 +1,22 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import { validateEmail, validatePassword } from '../../utils/validators';
+import Swal from 'sweetalert2';
 
 function LoginRegisterForm({ action }) {
   const navigate = useNavigate();
-  const { login, logout, currentUser } = useContext(AuthContext);
+  const { login, register } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     username: '',
     confirmPassword: '',
   });
-  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -26,9 +28,29 @@ function LoginRegisterForm({ action }) {
       action === 'register' &&
       formData.password !== formData.confirmPassword
     ) {
-      setError('Passwords do not match');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Passwords do not match',
+      });
       return;
     }
+    if (!validateEmail(formData.email)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid email format',
+        text: 'Please enter a valid email address.',
+      });
+      return;
+    }
+    // if (!validatePassword(formData.password)) {
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Weak password',
+    //     text: 'Password must be at least 6 characters.',
+    //   });
+    //   return;
+    // }
     try {
       const payload =
         action === 'login'
@@ -39,14 +61,19 @@ function LoginRegisterForm({ action }) {
               password: formData.password,
             };
       if (action === 'login') {
-        login(payload);
+        await login(payload);
         navigate('/');
       } else {
+        await register(payload);
         navigate('/login');
       }
     } catch (error) {
       console.error(error);
-      setError('An error occurred, please try again.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'An error occurred, please try again.',
+      });
     }
   };
   return (
@@ -78,14 +105,13 @@ function LoginRegisterForm({ action }) {
         {action === 'register' ? (
           <input
             type="password"
-            name="password"
+            name="confirmPassword"
             className="login-register__input"
             placeholder="Confirm password"
             onChange={handleChange}
           />
         ) : null}
       </div>
-      {error && <p className="login-register__error">{error}</p>}
       <div className="login-register__btn-container">
         <button
           type="button"
