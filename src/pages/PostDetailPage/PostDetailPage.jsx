@@ -67,7 +67,12 @@ function PostDetailPage() {
       </section>
       <section className="post-detail-page__content">
         <PostDetail singlePost={singlePost} currentUser={currentUser} />
-        <Comments comments={comments} currentUser={currentUser} />
+        <Comments
+          comments={comments}
+          singlePost={singlePost}
+          currentUser={currentUser}
+          setComments={setComments}
+        />
       </section>
     </main>
   );

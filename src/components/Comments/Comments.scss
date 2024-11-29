@@ -32,6 +32,9 @@
       font-size: 1.7rem;
       padding: 0 1.5rem;
     }
+    &:hover {
+      background-color: $btn-hover;
+    }
   }
 
   &__list {
@@ -117,5 +120,20 @@
   }
   &__no-comment {
     font-size: 1.5rem;
+  }
+  &__edit-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  &__cancel {
+    padding: 0 1rem;
+    border-radius: 0;
+    background-color: white;
+    border: 1px solid darkgray;
+
+    &:hover {
+      background-color: rgb(230, 230, 230);
+    }
   }
 }
