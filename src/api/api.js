@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const validatePassword = async (userId, password) => {
@@ -159,6 +160,7 @@ const userInfoUpdate = async (userId, updateData) => {
   try {
     const url = `/api/auth/update-user/${userId}`;
     const { data } = await axios.put(`${baseUrl}${url}`, updateData);
+
     return data;
   } catch (error) {
     console.error('Error updating user info: ', error);

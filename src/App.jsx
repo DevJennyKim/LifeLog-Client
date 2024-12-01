@@ -1,4 +1,3 @@
-import './App.scss';
 import { BrowserRouter, Routes, Route, Router } from 'react-router-dom';
 import LoginRegister from './pages/LoginRegister/LoginRegister';
 import Header from './components/Header/Header';
@@ -17,8 +16,11 @@ function App() {
           <ProtectedRouteHeader />
           <Routes>
             <Route path="/" element={<ProtectedRoute />} />
-            <Route path="/login" element={<LoginRegister />} />
-            <Route path="/register" element={<LoginRegister />} />
+            <Route path="/login" element={<LoginRegister isLogin={true} />} />
+            <Route
+              path="/register"
+              element={<LoginRegister isLogin={false} />}
+            />
             <Route path="/posts" element={<PostPage />} />
             <Route path="/posts/category/:categoryId" element={<PostPage />} />
             <Route path="/posts/:postId" element={<PostDetailPage />} />

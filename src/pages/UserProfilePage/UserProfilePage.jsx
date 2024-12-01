@@ -3,10 +3,11 @@ import { useAuth } from '../../context/AuthContext';
 import { userInfoUpdate } from '../../api/api';
 import Swal from 'sweetalert2';
 import './UserProfilePage.scss';
+
 import { useState } from 'react';
 
 function UserProfilePage() {
-  const { currentUser } = useAuth();
+  const { currentUser, refreshUser } = useAuth();
   const [username, setUsername] = useState(currentUser?.name || '');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -22,13 +23,14 @@ function UserProfilePage() {
       });
       return;
     }
-    const updateData = {
+    const updatedData = {
       userId: currentUser.id,
       username,
       password: password || undefined,
     };
     try {
-      const response = await userInfoUpdate(currentUser.id, updateData);
+      await userInfoUpdate(currentUser.id, updatedData);
+      await refreshUser(currentUser.id);
       Swal.fire({
         icon: 'success',
         title: 'Updated!',

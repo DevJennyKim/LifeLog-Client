@@ -1,12 +1,10 @@
 import './LoginRegister.scss';
 import LoginRegisterForm from '../../components/LoginRegisterForm/LoginRegisterForm';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Logo from '../../assets/logo/font-white.svg';
 
-function LoginRegister() {
-  const location = useLocation();
+function LoginRegister({ isLogin }) {
   const navigate = useNavigate();
-  const isLogin = location.pathname === '/login';
 
   return (
     <main className="login-register__main">
@@ -26,6 +24,7 @@ function LoginRegister() {
           </h1>
 
           <LoginRegisterForm
+            key={isLogin ? 'login' : 'register'}
             action={isLogin ? 'login' : 'register'}
             onSwitch={() => navigate(isLogin ? '/register' : '/login')}
           />
@@ -34,7 +33,7 @@ function LoginRegister() {
             <div className="login-register__question-container">
               <p className="login-register__question">
                 Do you already have an account?
-              </p>{' '}
+              </p>
               <Link to="/login" className="login-register__link">
                 Login here
               </Link>

@@ -131,7 +131,6 @@ function WritePostPage({ action }) {
           });
         }
       } else if (action === 'update') {
-        console.log('update post data:', postData);
         const response = await updatePost(singlePost.id, postData);
         if (response) {
           Swal.fire({

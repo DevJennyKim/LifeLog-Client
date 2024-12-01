@@ -117,8 +117,26 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const refreshUser = async (userId) => {
+    try {
+      const { data } = await axios.get(`${baseUrl}/api/auth/user/${userId}`);
+      setCurrentUser(data);
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          user: data,
+          expiryTime: new Date().getTime() + 2 * 60 * 60 * 1000,
+        })
+      );
+    } catch (error) {
+      console.error('Error during refresh user data:', error);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ currentUser, login, logout, register }}>
+    <AuthContext.Provider
+      value={{ currentUser, login, logout, register, refreshUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
