@@ -1,4 +1,3 @@
-// import Swal from 'sweetalert2';
 import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 
@@ -60,46 +59,6 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  // const extendSession = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       `${baseUrl}/api/auth/extend-session`,
-  //       {},
-  //       { withCredentials: true }
-  //     );
-  //     const newExpiryTime = new Date().getTime() + 2 * 60 * 60 * 1000; // 2 hours
-  //     localStorage.setItem(
-  //       'user',
-  //       JSON.stringify({ user: currentUser, expiryTime: newExpiryTime })
-  //     );
-  //     Swal.fire({
-  //       icon: 'success',
-  //       title: 'Session Extended!',
-  //       text: 'Your session has been extended for another 2 hours.',
-  //     });
-  //   } catch (error) {
-  //     console.error('Error extending session:', error);
-  //     Swal.fire({
-  //       icon: 'error',
-  //       title: 'Session Extension Failed',
-  //       text: 'Could not extend the session. Please log in again.',
-  //     });
-  //     logout();
-  //   }
-  // };
-
-  useEffect(() => {
-    if (currentUser) {
-      const expiryTime = new Date().getTime() + 2 * 60 * 60 * 1000;
-      localStorage.setItem(
-        'user',
-        JSON.stringify({ user: currentUser, expiryTime })
-      );
-    } else {
-      localStorage.removeItem('user');
-    }
-  }, [currentUser]);
-
   useEffect(() => {
     const token = getCookie('access_token');
     setIsAuthenticated(!!token && !!currentUser);
@@ -121,13 +80,6 @@ const AuthContextProvider = ({ children }) => {
     try {
       const { data } = await axios.get(`${baseUrl}/api/auth/user/${userId}`);
       setCurrentUser(data);
-      localStorage.setItem(
-        'user',
-        JSON.stringify({
-          user: data,
-          expiryTime: new Date().getTime() + 2 * 60 * 60 * 1000,
-        })
-      );
     } catch (error) {
       console.error('Error during refresh user data:', error);
     }
