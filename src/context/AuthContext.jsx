@@ -91,7 +91,10 @@ const AuthContextProvider = ({ children }) => {
 
   const refreshUser = async (userId) => {
     try {
-      const { data } = await axios.get(`${baseUrl}/api/auth/user/${userId}`);
+      const { data } = await axios.get(`${baseUrl}/api/auth/user/${userId}`, {
+        withCredentials: true,
+      });
+
       setCurrentUser(data);
       localStorage.setItem(
         'user',
