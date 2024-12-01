@@ -7,6 +7,7 @@ import PostDetailPage from './pages/PostDetailPage/PostDetailPage';
 import { AuthContextProvider, useAuth } from './context/AuthContext';
 import WritePostPage from './pages/WritePostPage/WritePostPage';
 import UserProfilePage from './pages/UserProfilePage/UserProfilePage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 function App() {
   return (
@@ -30,6 +31,8 @@ function App() {
               element={<WritePostPage action="update" />}
             />
             <Route path="/user-profile" element={<UserProfilePage />} />
+            <Route path="/404" element={<NotFoundPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </AuthContextProvider>
       </BrowserRouter>

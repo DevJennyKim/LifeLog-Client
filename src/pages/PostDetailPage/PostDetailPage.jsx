@@ -2,7 +2,7 @@ import './PostDetailPage.scss';
 import PostListInDetail from '../../components/PostListInDetail/PostListInDetail';
 import PostDetail from '../../components/PostDetail/PostDetail';
 import Comments from '../../components/Comments/Comments';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import {
@@ -17,14 +17,20 @@ function PostDetailPage() {
   const [posts, setPosts] = useState([]);
   const [singlePost, setSinglePost] = useState({});
   const [comments, setComments] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const data = await getPosts();
-        setPosts(data || []);
+        if (data) {
+          setPosts(data);
+        } else {
+          navigate('/404');
+        }
       } catch (error) {
         console.error('Error fetching posts:', error);
+        navigate('/404');
       }
     };
     fetchPosts();
