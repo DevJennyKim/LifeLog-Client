@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { userInfoUpdate } from '../../api/api';
+import { userInfoUpdate, validatePassword } from '../../api/api';
 import Swal from 'sweetalert2';
 import './UserProfilePage.scss';
 
@@ -20,6 +20,14 @@ function UserProfilePage() {
         icon: 'error',
         title: 'Oops...',
         text: 'Passwords and confirm password do not match',
+      });
+      return;
+    }
+    if (password && !validatePassword(password)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Password',
+        text: 'Password must be between 6 and 20 characters long, and contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
       });
       return;
     }

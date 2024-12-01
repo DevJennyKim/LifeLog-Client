@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { validateEmail, validatePassword } from '../../utils/validators';
@@ -43,7 +43,7 @@ function LoginRegisterForm({ action }) {
       });
       return;
     }
-    if (!validatePassword(formData.password)) {
+    if (action === 'register' && !validatePassword(formData.password)) {
       Swal.fire({
         icon: 'error',
         title: 'Weak password',

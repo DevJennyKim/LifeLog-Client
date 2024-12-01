@@ -2,7 +2,7 @@ import './PostDetailPage.scss';
 import PostListInDetail from '../../components/PostListInDetail/PostListInDetail';
 import PostDetail from '../../components/PostDetail/PostDetail';
 import Comments from '../../components/Comments/Comments';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import {

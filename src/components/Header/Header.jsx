@@ -85,9 +85,9 @@ function Header() {
         className={`nav__toggle ${isMenuOpen ? 'nav__toggle--active' : ''}`}
         onClick={toggleMenu}
       >
-        <span />
-        <span />
-        <span />
+        <span className="nav__toggle-line" />
+        <span className="nav__toggle-line" />
+        <span className="nav__toggle-line" />
       </button>
       <div className={`nav__menu ${isMenuOpen ? 'nav__menu--open' : ''}`}>
         <Link to="/" className="nav__links">
