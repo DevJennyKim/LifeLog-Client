@@ -1,4 +1,3 @@
-// import Swal from 'sweetalert2';
 import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 
