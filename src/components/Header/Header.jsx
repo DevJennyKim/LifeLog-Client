@@ -7,7 +7,7 @@ import { getCategory, validatePassword } from '../../api/api';
 import Swal from 'sweetalert2';
 
 function Header() {
-  const { logout, currentUser } = useAuth();
+  const { logout, currentUser, refreshUser } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
@@ -108,16 +108,6 @@ function Header() {
               ))}
           </div>
         </div>
-        <Link
-          to="/guestbook"
-          className="nav__links"
-          onClick={(event) => {
-            event.preventDefault();
-            alert('Coming Soon!');
-          }}
-        >
-          Guest Book
-        </Link>
         <div className="nav__users">
           <button className="nav__links nav__btn" onClick={handleProfileClick}>
             {currentUser.name}
