@@ -4,5 +4,12 @@ export const validateEmail = (email) => {
 };
 
 export const validatePassword = (password) => {
-  return password.length >= 6;
+  const isLengthValid = password.length >= 6 && password.length <= 20;
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasLowerCase = /[a-z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  return (
+    isLengthValid && hasLowerCase && hasNumber && hasSpecialChar && hasUpperCase
+  );
 };

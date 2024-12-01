@@ -43,14 +43,14 @@ function LoginRegisterForm({ action }) {
       });
       return;
     }
-    // if (!validatePassword(formData.password)) {
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: 'Weak password',
-    //     text: 'Password must be at least 6 characters.',
-    //   });
-    //   return;
-    // }
+    if (!validatePassword(formData.password)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Weak password',
+        text: 'Password must be at least 6 characters.',
+      });
+      return;
+    }
     try {
       const payload =
         action === 'login'
