@@ -40,10 +40,14 @@ function PostDetailPage() {
     const fetchPostsById = async () => {
       try {
         const data = await getSinglePostsById(postId);
-
-        setSinglePost(data || {});
+        if (data) {
+          setSinglePost(data || {});
+        } else {
+          navigate('/404');
+        }
       } catch (error) {
         console.error('Error fetching single post by ID:', error);
+        navigate('/404');
       }
     };
     if (postId) {

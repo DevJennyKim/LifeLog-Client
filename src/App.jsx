@@ -41,12 +41,12 @@ function App() {
 }
 
 function ProtectedRoute() {
-  const { currentUser } = useAuth();
-  return currentUser ? <PostPage /> : <HomePage />;
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <PostPage /> : <HomePage />;
 }
 function ProtectedRouteHeader() {
-  const { currentUser } = useAuth();
-  return currentUser && <Header />;
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated && <Header />;
 }
 
 export default App;
