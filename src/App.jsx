@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, Router } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Router,
+  Navigate,
+} from 'react-router-dom';
 import LoginRegister from './pages/LoginRegister/LoginRegister';
 import Header from './components/Header/Header';
 import HomePage from './pages/HomePage/HomePage';
@@ -17,10 +23,13 @@ function App() {
           <ProtectedRouteHeader />
           <Routes>
             <Route path="/" element={<ProtectedRoute />} />
-            <Route path="/login" element={<LoginRegister isLogin={true} />} />
+            <Route
+              path="/login"
+              element={<ProtectedRouteRedirect to="/posts" isLogin={true} />}
+            />
             <Route
               path="/register"
-              element={<LoginRegister isLogin={false} />}
+              element={<ProtectedRouteRedirect to="/posts" isLogin={false} />}
             />
             <Route path="/posts" element={<PostPage />} />
             <Route path="/posts/category/:categoryId" element={<PostPage />} />
@@ -39,14 +48,21 @@ function App() {
     </>
   );
 }
+function ProtectedRouteRedirect({ to, isLogin }) {
+  const { isAuthenticated } = useAuth();
+  if (isAuthenticated) {
+    return <Navigate to={to} />;
+  }
+  return <LoginRegister isLogin={isLogin} />;
+}
 
 function ProtectedRoute() {
-  const { currentUser } = useAuth();
-  return currentUser ? <PostPage /> : <HomePage />;
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <PostPage /> : <HomePage />;
 }
 function ProtectedRouteHeader() {
-  const { currentUser } = useAuth();
-  return currentUser && <Header />;
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated && <Header />;
 }
 
 export default App;

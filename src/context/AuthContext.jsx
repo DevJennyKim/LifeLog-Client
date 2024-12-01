@@ -60,8 +60,21 @@ const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (currentUser) {
+      const expiryTime = new Date().getTime() + 2 * 60 * 60 * 1000;
+      localStorage.setItem(
+        'user',
+        JSON.stringify({ user: currentUser, expiryTime })
+      );
+    } else {
+      localStorage.removeItem('user');
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
     const token = getCookie('access_token');
-    setIsAuthenticated(!!token && !!currentUser);
+    const isTokenValid = !!token && !!currentUser;
+    setIsAuthenticated(isTokenValid);
   }, [currentUser]);
 
   const register = async (inputs) => {
@@ -80,6 +93,13 @@ const AuthContextProvider = ({ children }) => {
     try {
       const { data } = await axios.get(`${baseUrl}/api/auth/user/${userId}`);
       setCurrentUser(data);
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          user: data,
+          expiryTime: new Date().getTime() + 2 * 60 * 60 * 1000,
+        })
+      );
     } catch (error) {
       console.error('Error during refresh user data:', error);
     }
@@ -87,7 +107,14 @@ const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ currentUser, login, logout, register, refreshUser }}
+      value={{
+        currentUser,
+        login,
+        logout,
+        register,
+        refreshUser,
+        isAuthenticated,
+      }}
     >
       {children}
     </AuthContext.Provider>
