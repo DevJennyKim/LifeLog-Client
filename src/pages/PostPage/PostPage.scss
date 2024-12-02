@@ -24,13 +24,13 @@
     border-bottom: 1px solid #ccc;
     margin-bottom: 1.5rem;
     text-align: center;
+    animation: fadeInDown 0.8s ease-out;
     @include tablet {
       text-align: start;
     }
     @include desktop {
       text-align: start;
     }
-    animation: fadeInDown 0.8s ease-out;
   }
 
   &__title {
@@ -42,7 +42,6 @@
     @include tablet {
       font-size: 3rem;
     }
-    animation: fadeIn 0.7s ease-out;
   }
 
   &__item-link {
@@ -60,7 +59,6 @@
     @include desktop {
       flex-direction: row;
     }
-    animation: fadeInLeft 1s ease-out;
     opacity: 0;
     animation: fadeInLeft 1s ease-out forwards;
 

@@ -23,14 +23,12 @@ function WritePostPage({ action }) {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [uploadedImages, setUploadedImages] = useState([]);
   const [error, setError] = useState({});
-  const [post, setPost] = useState(null);
 
   const singlePost = location.state ? location.state.singlePost : null;
 
   useEffect(() => {
     if (action === 'update' && singlePost) {
       if (singlePost) {
-        setPost(singlePost);
         setTitle(singlePost.title);
         setSelectedCategory(singlePost.category_id);
         setPostContent(`![image](${singlePost.img})`, singlePost.desc);

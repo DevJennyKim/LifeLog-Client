@@ -197,14 +197,17 @@
       background-color: $bg-color;
       flex-direction: column;
       z-index: 1000;
-      width: 150px;
+      width: 15rem;
       &-item {
         padding: 1rem 2rem;
         text-decoration: none;
         color: #555;
         &:hover {
           background-color: $dark-brown;
-          color: #333;
+          width: 100%;
+          text-align: center;
+          font-weight: 300;
+          color: #fff;
         }
       }
 

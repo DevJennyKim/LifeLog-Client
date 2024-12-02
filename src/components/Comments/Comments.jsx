@@ -15,7 +15,6 @@ function Comments({
   const [openMenu, setOpenMenu] = useState({});
   const [newComment, setNewComment] = useState('');
   const [editingCommentId, setEditingCommentId] = useState(null);
-  const [error, setError] = useState('');
   const [editedComments, setEditedComments] = useState({});
 
   const handleCommentChange = (e) => {
