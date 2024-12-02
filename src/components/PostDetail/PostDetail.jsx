@@ -34,12 +34,12 @@ function PostDetail({ singlePost, currentUser }) {
         },
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const deletedPost = await deletePost(singlePost.id);
+          await deletePost(singlePost.id);
           Swal.fire({
             icon: 'success',
             title: 'Deleted!',
             didClose: () => {
-              navigate('/'); // navigate는 여기서 사용하므로 문제가 없을 것입니다.
+              navigate('/');
             },
           });
         }

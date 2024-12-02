@@ -7,7 +7,7 @@ import { getCategory, validatePassword } from '../../api/api';
 import Swal from 'sweetalert2';
 
 function Header() {
-  const { logout, currentUser, refreshUser } = useAuth();
+  const { logout, currentUser } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [categories, setCategories] = useState([]);
 
