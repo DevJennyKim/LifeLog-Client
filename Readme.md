@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Lifelog** is a platform where users can record and share their daily lives. Users can post photos, texts, or videos about their activities and interact with others.
+**Lifelog** is a platform where users can record and share their daily lives. Users can post photos, texts about their activities and interact with others.
 
 ### Problem Statement
 
@@ -30,8 +30,8 @@
 
 ### Tech Stack
 
-- **Frontend**: React (TypeScript, Sass, React Router, Axios)
-- **Backend**: Express, Node (Knex, bcrypt, JWT)
+- **Frontend**: React (Sass, React Router, Axios)
+- **Backend**: Express (Knex, bcrypt, JWT)
 - **Database**: MySQL
 
 ### APIs

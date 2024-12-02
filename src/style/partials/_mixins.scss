@@ -1,0 +1,136 @@
+@use './variables' as *;
+
+//screen size
+@mixin tablet {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1280px) {
+    @content;
+  }
+}
+
+//font
+@mixin title_font {
+  font-family: 'Playfair Display', serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+//btn style
+@mixin btn-style {
+  padding: 0.3rem 2rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: black;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+//flex style
+@mixin column {
+  display: flex;
+  flex-direction: column;
+}
+
+//animations
+@keyframes grow {
+  from {
+    flex: 0.5;
+  }
+  to {
+    flex: 1.8;
+  }
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.98);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes width {
+  from {
+    width: 0;
+  }
+  to {
+    width: 103%;
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+//Fade In Animations
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes jelly {
+  25% {
+    transform: scale(0.9, 1.1);
+  }
+
+  50% {
+    transform: scale(1.1, 0.9);
+  }
+
+  75% {
+    transform: scale(0.95, 1.05);
+  }
+}

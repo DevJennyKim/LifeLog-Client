@@ -1,0 +1,105 @@
+@use '../../style/partials/global' as *;
+@use '../../style/partials/mixins' as *;
+@use '../../style/partials/variables' as *;
+
+.profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+
+  &__container {
+    width: 100%;
+    max-width: 70rem;
+    background: #fff;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+
+  &__title-container {
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 1px solid lightgray;
+  }
+
+  &__title {
+    text-align: start;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    padding: 1rem;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 1.2rem;
+  }
+
+  &__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #555;
+  }
+
+  &__text {
+    font-size: 1.5rem;
+    color: #333;
+    padding: 8px 10px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+  }
+
+  &__input {
+    font-size: 1.5rem;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #333;
+
+    &:focus {
+      border-color: #555;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+    }
+  }
+
+  &__button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  &__button {
+    font-size: 1.5rem;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    &--save {
+      background-color: $btn-color;
+      color: black;
+      &:hover {
+        background-color: $btn-hover;
+      }
+    }
+
+    &--cancel {
+      background-color: #ddd;
+      color: #333;
+
+      &:hover {
+        background-color: #bbb;
+      }
+    }
+  }
+}
