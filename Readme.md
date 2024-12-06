@@ -57,30 +57,30 @@
 ### Screenshots
 
 - **Home Page (Before Login)**  
-  ![](./proposal/Main.png)
+  ![](./proposal-ScreenShots/Main.png)
 - **Register Page**  
-  ![](./proposal/Register.png)
+  ![](./proposal-ScreenShots/Register.png)
 - **Login Page**  
-  ![](./proposal/Login.png)
+  ![](./proposal-ScreenShots/Login.png)
 - **All Posts**  
-  ![](./proposal/AllPost.png)
+  ![](./proposal-ScreenShots/AllPost.png)
 - **Category-wise Posts**  
-  ![](./proposal/Category.png)
+  ![](./proposal-ScreenShots/Category.png)
 - **Guestbook**  
-  ![](./proposal/GuestBook-extra.png)
+  ![](./proposal-ScreenShots/GuestBook-extra.png)
 - **Profile Page**  
-  ![](./proposal/MyProfile.png)
+  ![](./proposal-ScreenShots/MyProfile.png)
 - **Writing Page**  
-  ![](./proposal/Writing.png)
+  ![](./proposal-ScreenShots/Writing.png)
 - **Single Post Page**  
-  ![](./proposal/SinglePost.png)
+  ![](./proposal-ScreenShots/SinglePost.png)
 
 ---
 
 ## Data Structure
 
 - **Database Schema**  
-  ![](./proposal/sql-diagram.png)
+  ![](./proposal-ScreenShots/sql-diagram.png)
 
 ---
 
