@@ -52,31 +52,6 @@
 
 ---
 
-## Mockups
-
-### Screenshots
-
-- **Home Page (Before Login)**  
-  ![](./proposal/Main.png)
-- **Register Page**  
-  ![](./proposal/Register.png)
-- **Login Page**  
-  ![](./proposal/Login.png)
-- **All Posts**  
-  ![](./proposal/AllPost.png)
-- **Category-wise Posts**  
-  ![](./proposal/Category.png)
-- **Guestbook**  
-  ![](./proposal/GuestBook-extra.png)
-- **Profile Page**  
-  ![](./proposal/MyProfile.png)
-- **Writing Page**  
-  ![](./proposal/Writing.png)
-- **Single Post Page**  
-  ![](./proposal/SinglePost.png)
-
----
-
 ## Data Structure
 
 - **Database Schema**  
