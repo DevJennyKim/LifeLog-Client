@@ -9,7 +9,7 @@ This is the frontend for the LifeLog application. It integrates with the LifeLog
 3. [Available Scripts](#available-scripts)
 4. [Features](#features)
 5. [Tech Stack](#tech-stack)
-6. [Reference Video](https://youtu.be/8v2qZGydmvw?si=c0X6KIsJGyrIR7Wa))
+6. [Reference Video](https://youtu.be/8v2qZGydmvw?si=c0X6KIsJGyrIR7Wa)
 
 ---
 
